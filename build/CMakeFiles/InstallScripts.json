@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/cmake_install.cmake",
+		"C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-build/cmake_install.cmake",
+		"C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

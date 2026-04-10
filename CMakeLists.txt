@@ -67,6 +67,7 @@ add_executable(MokaProject
     src/main.cpp
     src/shader.cpp
     src/glad.c
+    src/stb_image.cpp
 )
 
 target_include_directories(MokaProject PRIVATE 
@@ -83,3 +84,4 @@ target_link_libraries(MokaProject PRIVATE
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/models DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

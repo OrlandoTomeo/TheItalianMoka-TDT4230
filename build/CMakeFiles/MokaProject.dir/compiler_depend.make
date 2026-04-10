@@ -101,6 +101,7 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: C:/Users/orlan/Desktop/TheItalianMo
   C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/mesh.hpp \
   C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/model.hpp \
   C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/shader.hpp \
+  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.h \
   c:/mingw/include/_mingw.h \
   c:/mingw/include/assert.h \
   c:/mingw/include/ctype.h \
@@ -226,6 +227,7 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: C:/Users/orlan/Desktop/TheItalianMo
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/new \
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/ostream \
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/stdexcept \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/stdlib.h \
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/streambuf \
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/string \
   c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/system_error \
@@ -721,6 +723,35 @@ CMakeFiles/MokaProject.dir/src/shader.cpp.obj: C:/Users/orlan/Desktop/TheItalian
   c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/simd/platform.h \
   c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/vector_relational.hpp
 
+CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj: C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.cpp \
+  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.h \
+  c:/mingw/include/_mingw.h \
+  c:/mingw/include/assert.h \
+  c:/mingw/include/limits.h \
+  c:/mingw/include/math.h \
+  c:/mingw/include/msvcrtver.h \
+  c:/mingw/include/sdkddkver.h \
+  c:/mingw/include/stdint.h \
+  c:/mingw/include/stdio.h \
+  c:/mingw/include/stdlib.h \
+  c:/mingw/include/string.h \
+  c:/mingw/include/strings.h \
+  c:/mingw/include/sys/types.h \
+  c:/mingw/include/w32api.h \
+  c:/mingw/include/wchar.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/bits/cpp_type_traits.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/cmath \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/cstdlib \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/ext/type_traits.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/math.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/mingw32/bits/c++config.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/mingw32/bits/cpu_defines.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/mingw32/bits/os_defines.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/stdlib.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/stdarg.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/stddef.h \
+  c:/mingw/lib/gcc/mingw32/6.3.0/include/stdint.h
+
 
 c:/mingw/include/winspool.h:
 
@@ -890,6 +921,8 @@ c:/mingw/include/rpcnsip.h:
 
 c:/mingw/include/shellapi.h:
 
+C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.cpp:
+
 c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/ext/vector_bool4_precision.hpp:
 
 c:/mingw/include/stdlib.h:
@@ -1031,6 +1064,8 @@ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/model.hpp:
 c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/detail/type_mat3x4.hpp:
 
 C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/shader.hpp:
+
+C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.h:
 
 _deps/assimp-src/include/assimp/material.inl:
 
@@ -1295,6 +1330,8 @@ c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/new:
 c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/ostream:
 
 c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/stdexcept:
+
+c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/stdlib.h:
 
 c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/string:
 
@@ -1569,3 +1606,5 @@ c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/gtc/epsilon.h
 c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/gtc/quaternion.hpp:
 
 c:/users/orlan/desktop/theitalianmoka-tdt4230/external/include/glm/gtc/quaternion.inl:
+
+c:/mingw/lib/gcc/mingw32/6.3.0/include/c++/math.h:

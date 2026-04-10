@@ -18,6 +18,12 @@
   "output": "CMakeFiles/MokaProject.dir/src/glad.c.obj"
 },
 {
+  "directory": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -D_SSIZE_T_DEFINED @CMakeFiles/MokaProject.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\MokaProject.dir\\src\\stb_image.cpp.obj -c C:\\Users\\orlan\\Desktop\\TheItalianMoka-TDT4230\\src\\stb_image.cpp",
+  "file": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.cpp",
+  "output": "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj"
+},
+{
   "directory": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-build/src",
   "command": "C:\\MinGW\\bin\\gcc.exe -DUNICODE -DWINVER=0x0501 -D_GLFW_USE_CONFIG_H -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -std=gnu99 -Wall -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\context.c.obj -c C:\\Users\\orlan\\Desktop\\TheItalianMoka-TDT4230\\build\\_deps\\glfw-src\\src\\context.c",
   "file": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-src/src/context.c",

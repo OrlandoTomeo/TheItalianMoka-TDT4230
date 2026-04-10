@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/glad.c" "CMakeFiles/MokaProject.dir/src/glad.c.obj" "gcc" "CMakeFiles/MokaProject.dir/src/glad.c.obj.d"
   "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/main.cpp" "CMakeFiles/MokaProject.dir/src/main.cpp.obj" "gcc" "CMakeFiles/MokaProject.dir/src/main.cpp.obj.d"
   "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/shader.cpp" "CMakeFiles/MokaProject.dir/src/shader.cpp.obj" "gcc" "CMakeFiles/MokaProject.dir/src/shader.cpp.obj.d"
+  "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.cpp" "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj" "gcc" "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

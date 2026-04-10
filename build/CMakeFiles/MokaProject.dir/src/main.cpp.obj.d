@@ -272,6 +272,14 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\vector \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_construct.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_uninitialized.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_vector.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_bvector.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\vector.tcc \
+ C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\stb_image.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h \
  C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\shader.hpp \
  C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\model.hpp \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\importer.hpp \
@@ -297,7 +305,6 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\algorithmfwd.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_heap.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_tempbuf.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_construct.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\uniform_int_dist.h \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\matrix4x4.inl \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\MathFunctions.h \
@@ -314,9 +321,4 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\anim.h \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\metadata.h \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\postprocess.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\vector \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_uninitialized.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_vector.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_bvector.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\vector.tcc \
  C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\mesh.hpp

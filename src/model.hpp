@@ -23,7 +23,7 @@ private:
     void loadModel(std::string const &path) {
         Assimp::Importer importer;
         // Chiediamo ad Assimp di triangolare il modello e calcolare le normali morbide se mancano
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_PreTransformVertices);
 
         if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
             std::cout << "ERRORE ASSIMP: " << importer.GetErrorString() << std::endl;

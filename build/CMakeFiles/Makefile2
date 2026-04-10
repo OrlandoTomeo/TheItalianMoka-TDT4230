@@ -64,21 +64,135 @@ CMAKE_BINARY_DIR = C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build
 # The main recursive "all" target.
 all: CMakeFiles/MokaProject.dir/all
 all: _deps/glfw-build/all
+all: _deps/glm-build/all
+all: _deps/assimp-build/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/MokaProject.dir/codegen
 codegen: _deps/glfw-build/codegen
+codegen: _deps/glm-build/codegen
+codegen: _deps/assimp-build/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
 preinstall: _deps/glfw-build/preinstall
+preinstall: _deps/glm-build/preinstall
+preinstall: _deps/assimp-build/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/MokaProject.dir/clean
 clean: _deps/glfw-build/clean
+clean: _deps/glm-build/clean
+clean: _deps/assimp-build/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory _deps/assimp-build
+
+# Recursive "all" directory target.
+_deps/assimp-build/all: _deps/assimp-build/contrib/zlib/all
+_deps/assimp-build/all: _deps/assimp-build/contrib/all
+_deps/assimp-build/all: _deps/assimp-build/code/all
+.PHONY : _deps/assimp-build/all
+
+# Recursive "codegen" directory target.
+_deps/assimp-build/codegen: _deps/assimp-build/contrib/zlib/codegen
+_deps/assimp-build/codegen: _deps/assimp-build/contrib/codegen
+_deps/assimp-build/codegen: _deps/assimp-build/code/codegen
+.PHONY : _deps/assimp-build/codegen
+
+# Recursive "preinstall" directory target.
+_deps/assimp-build/preinstall: _deps/assimp-build/contrib/zlib/preinstall
+_deps/assimp-build/preinstall: _deps/assimp-build/contrib/preinstall
+_deps/assimp-build/preinstall: _deps/assimp-build/code/preinstall
+.PHONY : _deps/assimp-build/preinstall
+
+# Recursive "clean" directory target.
+_deps/assimp-build/clean: _deps/assimp-build/contrib/zlib/clean
+_deps/assimp-build/clean: _deps/assimp-build/contrib/clean
+_deps/assimp-build/clean: _deps/assimp-build/code/clean
+.PHONY : _deps/assimp-build/clean
+
+#=============================================================================
+# Directory level rules for directory _deps/assimp-build/code
+
+# Recursive "all" directory target.
+_deps/assimp-build/code/all: _deps/assimp-build/code/CMakeFiles/assimp.dir/all
+.PHONY : _deps/assimp-build/code/all
+
+# Recursive "codegen" directory target.
+_deps/assimp-build/code/codegen: _deps/assimp-build/code/CMakeFiles/assimp.dir/codegen
+.PHONY : _deps/assimp-build/code/codegen
+
+# Recursive "preinstall" directory target.
+_deps/assimp-build/code/preinstall:
+.PHONY : _deps/assimp-build/code/preinstall
+
+# Recursive "clean" directory target.
+_deps/assimp-build/code/clean: _deps/assimp-build/code/CMakeFiles/assimp.dir/clean
+.PHONY : _deps/assimp-build/code/clean
+
+#=============================================================================
+# Directory level rules for directory _deps/assimp-build/contrib
+
+# Recursive "all" directory target.
+_deps/assimp-build/contrib/all: _deps/assimp-build/contrib/irrXML/all
+.PHONY : _deps/assimp-build/contrib/all
+
+# Recursive "codegen" directory target.
+_deps/assimp-build/contrib/codegen: _deps/assimp-build/contrib/irrXML/codegen
+.PHONY : _deps/assimp-build/contrib/codegen
+
+# Recursive "preinstall" directory target.
+_deps/assimp-build/contrib/preinstall: _deps/assimp-build/contrib/irrXML/preinstall
+.PHONY : _deps/assimp-build/contrib/preinstall
+
+# Recursive "clean" directory target.
+_deps/assimp-build/contrib/clean: _deps/assimp-build/contrib/irrXML/clean
+.PHONY : _deps/assimp-build/contrib/clean
+
+#=============================================================================
+# Directory level rules for directory _deps/assimp-build/contrib/irrXML
+
+# Recursive "all" directory target.
+_deps/assimp-build/contrib/irrXML/all: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all
+.PHONY : _deps/assimp-build/contrib/irrXML/all
+
+# Recursive "codegen" directory target.
+_deps/assimp-build/contrib/irrXML/codegen: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/codegen
+.PHONY : _deps/assimp-build/contrib/irrXML/codegen
+
+# Recursive "preinstall" directory target.
+_deps/assimp-build/contrib/irrXML/preinstall:
+.PHONY : _deps/assimp-build/contrib/irrXML/preinstall
+
+# Recursive "clean" directory target.
+_deps/assimp-build/contrib/irrXML/clean: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/clean
+.PHONY : _deps/assimp-build/contrib/irrXML/clean
+
+#=============================================================================
+# Directory level rules for directory _deps/assimp-build/contrib/zlib
+
+# Recursive "all" directory target.
+_deps/assimp-build/contrib/zlib/all: _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/all
+_deps/assimp-build/contrib/zlib/all: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all
+.PHONY : _deps/assimp-build/contrib/zlib/all
+
+# Recursive "codegen" directory target.
+_deps/assimp-build/contrib/zlib/codegen: _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/codegen
+_deps/assimp-build/contrib/zlib/codegen: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/codegen
+.PHONY : _deps/assimp-build/contrib/zlib/codegen
+
+# Recursive "preinstall" directory target.
+_deps/assimp-build/contrib/zlib/preinstall:
+.PHONY : _deps/assimp-build/contrib/zlib/preinstall
+
+# Recursive "clean" directory target.
+_deps/assimp-build/contrib/zlib/clean: _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/clean
+_deps/assimp-build/contrib/zlib/clean: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/clean
+.PHONY : _deps/assimp-build/contrib/zlib/clean
 
 #=============================================================================
 # Directory level rules for directory _deps/glfw-build
@@ -121,18 +235,59 @@ _deps/glfw-build/src/clean: _deps/glfw-build/src/CMakeFiles/glfw.dir/clean
 .PHONY : _deps/glfw-build/src/clean
 
 #=============================================================================
+# Directory level rules for directory _deps/glm-build
+
+# Recursive "all" directory target.
+_deps/glm-build/all: _deps/glm-build/glm/all
+.PHONY : _deps/glm-build/all
+
+# Recursive "codegen" directory target.
+_deps/glm-build/codegen: _deps/glm-build/glm/codegen
+.PHONY : _deps/glm-build/codegen
+
+# Recursive "preinstall" directory target.
+_deps/glm-build/preinstall: _deps/glm-build/glm/preinstall
+.PHONY : _deps/glm-build/preinstall
+
+# Recursive "clean" directory target.
+_deps/glm-build/clean: _deps/glm-build/glm/clean
+.PHONY : _deps/glm-build/clean
+
+#=============================================================================
+# Directory level rules for directory _deps/glm-build/glm
+
+# Recursive "all" directory target.
+_deps/glm-build/glm/all:
+.PHONY : _deps/glm-build/glm/all
+
+# Recursive "codegen" directory target.
+_deps/glm-build/glm/codegen:
+.PHONY : _deps/glm-build/glm/codegen
+
+# Recursive "preinstall" directory target.
+_deps/glm-build/glm/preinstall:
+.PHONY : _deps/glm-build/glm/preinstall
+
+# Recursive "clean" directory target.
+_deps/glm-build/glm/clean:
+.PHONY : _deps/glm-build/glm/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/MokaProject.dir
 
 # All Build rule for target.
 CMakeFiles/MokaProject.dir/all: _deps/glfw-build/src/CMakeFiles/glfw.dir/all
+CMakeFiles/MokaProject.dir/all: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all
+CMakeFiles/MokaProject.dir/all: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all
+CMakeFiles/MokaProject.dir/all: _deps/assimp-build/code/CMakeFiles/assimp.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=1,2,3,4 "Built target MokaProject"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=2,3,4 "Built target MokaProject"
 .PHONY : CMakeFiles/MokaProject.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/MokaProject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 87
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/MokaProject.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
 .PHONY : CMakeFiles/MokaProject.dir/rule
@@ -144,7 +299,7 @@ MokaProject: CMakeFiles/MokaProject.dir/rule
 # codegen rule for target.
 CMakeFiles/MokaProject.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target MokaProject"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=2,3,4 "Finished codegen for target MokaProject"
 .PHONY : CMakeFiles/MokaProject.dir/codegen
 
 # clean rule for target.
@@ -191,12 +346,12 @@ _deps/glfw-build/CMakeFiles/uninstall.dir/clean:
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=21 "Built target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num= "Built target update_mappings"
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/all
 
 # Build rule for subdir invocation for target.
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/rule
@@ -208,7 +363,7 @@ update_mappings: _deps/glfw-build/src/CMakeFiles/update_mappings.dir/rule
 # codegen rule for target.
 _deps/glfw-build/src/CMakeFiles/update_mappings.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\update_mappings.dir\build.make _deps/glfw-build/src/CMakeFiles/update_mappings.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=21 "Finished codegen for target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num= "Finished codegen for target update_mappings"
 .PHONY : _deps/glfw-build/src/CMakeFiles/update_mappings.dir/codegen
 
 # clean rule for target.
@@ -223,12 +378,12 @@ _deps/glfw-build/src/CMakeFiles/update_mappings.dir/clean:
 _deps/glfw-build/src/CMakeFiles/glfw.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Built target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=64,65,66,67,68,69,70,71,72,73,74,75 "Built target glfw"
 .PHONY : _deps/glfw-build/src/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.
 _deps/glfw-build/src/CMakeFiles/glfw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/glfw-build/src/CMakeFiles/glfw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
 .PHONY : _deps/glfw-build/src/CMakeFiles/glfw.dir/rule
@@ -240,13 +395,142 @@ glfw: _deps/glfw-build/src/CMakeFiles/glfw.dir/rule
 # codegen rule for target.
 _deps/glfw-build/src/CMakeFiles/glfw.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Finished codegen for target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=64,65,66,67,68,69,70,71,72,73,74,75 "Finished codegen for target glfw"
 .PHONY : _deps/glfw-build/src/CMakeFiles/glfw.dir/codegen
 
 # clean rule for target.
 _deps/glfw-build/src/CMakeFiles/glfw.dir/clean:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/clean
 .PHONY : _deps/glfw-build/src/CMakeFiles/glfw.dir/clean
+
+#=============================================================================
+# Target rules for target _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir
+
+# All Build rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/all:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlib.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/depend
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlib.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=76,77,78,79,80,81,82,83,84,85,86,87,88 "Built target zlib"
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/all
+
+# Build rule for subdir invocation for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 13
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/rule
+
+# Convenience name for target.
+zlib: _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/rule
+.PHONY : zlib
+
+# codegen rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlib.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=76,77,78,79,80,81,82,83,84,85,86,87,88 "Finished codegen for target zlib"
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/codegen
+
+# clean rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlib.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/clean
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/clean
+
+#=============================================================================
+# Target rules for target _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir
+
+# All Build rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlibstatic.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/depend
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlibstatic.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=89,90,91,92,93,94,95,96,97,98,99,100 "Built target zlibstatic"
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all
+
+# Build rule for subdir invocation for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 12
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/rule
+
+# Convenience name for target.
+zlibstatic: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/rule
+.PHONY : zlibstatic
+
+# codegen rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlibstatic.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=89,90,91,92,93,94,95,96,97,98,99,100 "Finished codegen for target zlibstatic"
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/codegen
+
+# clean rule for target.
+_deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/clean:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlibstatic.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/clean
+.PHONY : _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/clean
+
+#=============================================================================
+# Target rules for target _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir
+
+# All Build rule for target.
+_deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\irrXML\CMakeFiles\IrrXML.dir\build.make _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/depend
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\irrXML\CMakeFiles\IrrXML.dir\build.make _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=1 "Built target IrrXML"
+.PHONY : _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all
+
+# Build rule for subdir invocation for target.
+_deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 1
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
+.PHONY : _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/rule
+
+# Convenience name for target.
+IrrXML: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/rule
+.PHONY : IrrXML
+
+# codegen rule for target.
+_deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\irrXML\CMakeFiles\IrrXML.dir\build.make _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=1 "Finished codegen for target IrrXML"
+.PHONY : _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/codegen
+
+# clean rule for target.
+_deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/clean:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\irrXML\CMakeFiles\IrrXML.dir\build.make _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/clean
+.PHONY : _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/clean
+
+#=============================================================================
+# Target rules for target _deps/assimp-build/code/CMakeFiles/assimp.dir
+
+# All Build rule for target.
+_deps/assimp-build/code/CMakeFiles/assimp.dir/all: _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/all
+_deps/assimp-build/code/CMakeFiles/assimp.dir/all: _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/all
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/depend
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63 "Built target assimp"
+.PHONY : _deps/assimp-build/code/CMakeFiles/assimp.dir/all
+
+# Build rule for subdir invocation for target.
+_deps/assimp-build/code/CMakeFiles/assimp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 72
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 _deps/assimp-build/code/CMakeFiles/assimp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles 0
+.PHONY : _deps/assimp-build/code/CMakeFiles/assimp.dir/rule
+
+# Convenience name for target.
+assimp: _deps/assimp-build/code/CMakeFiles/assimp.dir/rule
+.PHONY : assimp
+
+# codegen rule for target.
+_deps/assimp-build/code/CMakeFiles/assimp.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63 "Finished codegen for target assimp"
+.PHONY : _deps/assimp-build/code/CMakeFiles/assimp.dir/codegen
+
+# clean rule for target.
+_deps/assimp-build/code/CMakeFiles/assimp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/clean
+.PHONY : _deps/assimp-build/code/CMakeFiles/assimp.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

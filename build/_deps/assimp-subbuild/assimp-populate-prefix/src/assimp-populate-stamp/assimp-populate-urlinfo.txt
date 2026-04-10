@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-subbuild/assimp-populate-prefix/src/assimp-populate-stamp/verify-assimp-populate.cmake;COMMAND;C:/Program Files/CMake/bin/cmake.exe;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-subbuild/assimp-populate-prefix/src/assimp-populate-stamp/extract-assimp-populate.cmake
+source_dir=C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-src
+work_dir=C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps
+url(s)=C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/assimp-5.0.1.zip
+hash=
+      no_extract=
+

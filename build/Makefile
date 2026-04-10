@@ -86,7 +86,7 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\" \"assimp-dev\" \"libassimp5.0.0-dev\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -212,6 +212,58 @@ glfw/fast:
 	$(MAKE) $(MAKESILENT) -f _deps\glfw-build\src\CMakeFiles\glfw.dir\build.make _deps/glfw-build/src/CMakeFiles/glfw.dir/build
 .PHONY : glfw/fast
 
+#=============================================================================
+# Target rules for targets named zlib
+
+# Build rule for target.
+zlib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 zlib
+.PHONY : zlib
+
+# fast build rule for target.
+zlib/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlib.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlib.dir/build
+.PHONY : zlib/fast
+
+#=============================================================================
+# Target rules for targets named zlibstatic
+
+# Build rule for target.
+zlibstatic: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 zlibstatic
+.PHONY : zlibstatic
+
+# fast build rule for target.
+zlibstatic/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\zlib\CMakeFiles\zlibstatic.dir\build.make _deps/assimp-build/contrib/zlib/CMakeFiles/zlibstatic.dir/build
+.PHONY : zlibstatic/fast
+
+#=============================================================================
+# Target rules for targets named IrrXML
+
+# Build rule for target.
+IrrXML: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 IrrXML
+.PHONY : IrrXML
+
+# fast build rule for target.
+IrrXML/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\contrib\irrXML\CMakeFiles\IrrXML.dir\build.make _deps/assimp-build/contrib/irrXML/CMakeFiles/IrrXML.dir/build
+.PHONY : IrrXML/fast
+
+#=============================================================================
+# Target rules for targets named assimp
+
+# Build rule for target.
+assimp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 assimp
+.PHONY : assimp
+
+# fast build rule for target.
+assimp/fast:
+	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/build
+.PHONY : assimp/fast
+
 src/glad.obj: src/glad.c.obj
 .PHONY : src/glad.obj
 
@@ -298,8 +350,12 @@ help:
 	@echo ... rebuild_cache
 	@echo ... uninstall
 	@echo ... update_mappings
+	@echo ... IrrXML
 	@echo ... MokaProject
+	@echo ... assimp
 	@echo ... glfw
+	@echo ... zlib
+	@echo ... zlibstatic
 	@echo ... src/glad.obj
 	@echo ... src/glad.i
 	@echo ... src/glad.s

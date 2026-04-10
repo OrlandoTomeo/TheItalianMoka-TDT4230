@@ -1,1 +1,1 @@
- -lopengl32 -lglu32 "_deps/glfw-build/src/libglfw3.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+ -lopengl32 -lglu32 "_deps/glfw-build/src/libglfw3.a" "_deps/assimp-build/code/libassimp.a" "_deps/assimp-build/contrib/zlib/libzlibstatic.a" "_deps/assimp-build/contrib/irrXML/libIrrXML.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

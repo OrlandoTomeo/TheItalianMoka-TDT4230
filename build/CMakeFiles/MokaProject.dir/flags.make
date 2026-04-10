@@ -3,13 +3,13 @@
 
 # compile C with C:/MinGW/bin/gcc.exe
 # compile CXX with C:/MinGW/bin/g++.exe
-C_DEFINES = 
+C_DEFINES = -D_SSIZE_T_DEFINED
 
 C_INCLUDES = @CMakeFiles/MokaProject.dir/includes_C.rsp
 
 C_FLAGS = -g
 
-CXX_DEFINES = 
+CXX_DEFINES = -D_SSIZE_T_DEFINED
 
 CXX_INCLUDES = @CMakeFiles/MokaProject.dir/includes_CXX.rsp
 

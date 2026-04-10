@@ -8,110 +8,22 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\mingw\include\sdkddkver.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\stddef.h \
  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/GLFW/glfw3.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iostream \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/glm.hpp \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/_fixes.hpp \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cmath \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\os_defines.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\cpu_defines.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ostream \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ios \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iosfwd \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stringfwd.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\memoryfwd.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\postypes.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cwchar \
- c:\mingw\include\wchar.h c:\mingw\include\wctype.h \
- c:\mingw\include\sys\types.h c:\mingw\include\stdio.h \
- c:\mingw\include\sys/types.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\stdarg.h \
- c:\mingw\include\stdlib.h c:\mingw\include\direct.h \
- c:\mingw\include\sys/stat.h c:\mingw\include\io.h \
- c:\mingw\include\stdint.h c:\mingw\include\time.h \
- c:\mingw\include\locale.h c:\mingw\include\process.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\exception \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\atomic_lockfree_defines.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\exception_ptr.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\exception_defines.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\nested_exception.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\move.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\concept_check.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\type_traits \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\char_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_algobase.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\functexcept.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\cpp_type_traits.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\type_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\numeric_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_pair.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator_base_types.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator_base_funcs.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\debug\assertions.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ptr_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\debug\debug.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\predefined_ops.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdint \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\localefwd.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++locale.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\clocale \
- c:\mingw\include\locale.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cctype \
- c:\mingw\include\ctype.h c:\mingw\include\wctype.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ios_base.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\atomicity.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\gthr.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\gthr-default.h \
- c:\mingw\include\errno.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\atomic_word.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_classes.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\string \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\allocator.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++allocator.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\new_allocator.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\new \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream_insert.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\cxxabi_forced.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_function.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\backward\binders.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\range_access.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\initializer_list \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_string.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\alloc_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\alloc_traits.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\string_conversions.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdlib \
- c:\mingw\include\stdlib.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdio \
- c:\mingw\include\stdio.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cerrno \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\functional_hash.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\hash_bytes.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_string.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_classes.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\system_error \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\error_constants.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdexcept \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\streambuf \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\streambuf.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_ios.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_facets.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cwctype \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\ctype_base.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\streambuf_iterator.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\ctype_inline.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_facets.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_ios.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream.tcc \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc \
- C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\shader.hpp \
- C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/glm.hpp \
- C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/_fixes.hpp \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cmath c:\mingw\include\math.h \
+ c:\mingw\include\math.h \
  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/setup.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cassert \
  c:\mingw\include\assert.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstddef \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\simd\platform.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdint \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\type_traits \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\climits \
  c:\mingw\include\limits.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cfloat \
@@ -144,11 +56,78 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\detail\type_vec3.inl \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\detail\compute_vector_decl.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\functional \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_function.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\move.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\concept_check.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\backward\binders.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\typeinfo \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\exception \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\atomic_lockfree_defines.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\exception_ptr.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\exception_defines.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\nested_exception.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\hash_bytes.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\new \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\tuple \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\utility \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_relops.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_pair.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\initializer_list \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\array \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdexcept \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\string \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stringfwd.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\memoryfwd.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\char_traits.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_algobase.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\functexcept.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\numeric_traits.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator_base_types.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator_base_funcs.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\debug\assertions.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_iterator.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ptr_traits.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\debug\debug.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\predefined_ops.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\postypes.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cwchar \
+ c:\mingw\include\wchar.h c:\mingw\include\wctype.h \
+ c:\mingw\include\sys\types.h c:\mingw\include\stdio.h \
+ c:\mingw\include\sys/types.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\stdarg.h \
+ c:\mingw\include\stdlib.h c:\mingw\include\direct.h \
+ c:\mingw\include\sys/stat.h c:\mingw\include\io.h \
+ c:\mingw\include\stdint.h c:\mingw\include\time.h \
+ c:\mingw\include\locale.h c:\mingw\include\process.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\allocator.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++allocator.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\new_allocator.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\localefwd.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++locale.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\clocale \
+ c:\mingw\include\locale.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iosfwd \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cctype \
+ c:\mingw\include\ctype.h c:\mingw\include\wctype.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream_insert.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\cxxabi_forced.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\range_access.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_string.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\atomicity.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\gthr.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\gthr-default.h \
+ c:\mingw\include\errno.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\atomic_word.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\alloc_traits.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\alloc_traits.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\string_conversions.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdlib \
+ c:\mingw\include\stdlib.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdio \
+ c:\mingw\include\stdio.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cerrno \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\functional_hash.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_string.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\uses_allocator.h \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\detail\_vectorize.hpp \
  c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\vector_bool3_precision.hpp \
@@ -259,4 +238,85 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/type_half.hpp \
  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/type_half.inl \
  C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/integer.hpp \
- C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/func_integer.inl
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/detail/func_integer.inl \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/gtc/matrix_transform.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_projection.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\gtc\constants.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\scalar_constants.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\scalar_constants.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\gtc\constants.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_projection.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_clip_space.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_clip_space.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_transform.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\external\include\glm\ext\matrix_transform.inl \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/glm/gtc/matrix_transform.inl \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iostream \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ostream \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ios \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ios_base.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_classes.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_classes.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\system_error \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\error_constants.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\streambuf \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\streambuf.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_ios.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_facets.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cwctype \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\ctype_base.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\streambuf_iterator.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\ctype_inline.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\locale_facets.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_ios.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream.tcc \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc \
+ C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\shader.hpp \
+ C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\model.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\importer.hpp \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\types.h \
+ c:\mingw\include\string.h c:\mingw\include\strings.h \
+ c:\mingw\include\wchar.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\defs.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-build\include\assimp\config.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\vector3.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\vector2.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\color4.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\matrix3x3.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\matrix4x4.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\quaternion.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstring \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\vector2.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\vector3.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\color4.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\quaternion.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\matrix3x3.inl \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\algorithm \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_algo.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\algorithmfwd.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_heap.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_tempbuf.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_construct.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\uniform_int_dist.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\matrix4x4.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\MathFunctions.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\scene.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\texture.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\compiler\pushpack1.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\compiler\poppack1.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\mesh.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\aabb.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\light.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\camera.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\material.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\material.inl \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\anim.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\metadata.h \
+ c:\users\orlan\desktop\theitalianmoka-tdt4230\build\_deps\assimp-src\include\assimp\postprocess.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\vector \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_uninitialized.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_vector.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_bvector.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\vector.tcc \
+ C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\mesh.hpp

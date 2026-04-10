@@ -1,0 +1,3 @@
+C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-subbuild/CMakeFiles/assimp-populate.dir
+C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-subbuild/CMakeFiles/edit_cache.dir
+C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-subbuild/CMakeFiles/rebuild_cache.dir

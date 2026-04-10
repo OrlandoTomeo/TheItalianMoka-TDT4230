@@ -130,6 +130,9 @@ MokaProject.exe: CMakeFiles/MokaProject.dir/src/shader.cpp.obj
 MokaProject.exe: CMakeFiles/MokaProject.dir/src/glad.c.obj
 MokaProject.exe: CMakeFiles/MokaProject.dir/build.make
 MokaProject.exe: _deps/glfw-build/src/libglfw3.a
+MokaProject.exe: _deps/assimp-build/code/libassimp.a
+MokaProject.exe: _deps/assimp-build/contrib/zlib/libzlibstatic.a
+MokaProject.exe: _deps/assimp-build/contrib/irrXML/libIrrXML.a
 MokaProject.exe: CMakeFiles/MokaProject.dir/linkLibs.rsp
 MokaProject.exe: CMakeFiles/MokaProject.dir/objects1.rsp
 MokaProject.exe: CMakeFiles/MokaProject.dir/link.txt

@@ -1,0 +1,11 @@
+prefix=C:/Program Files (x86)/MokaProject
+exec_prefix=C:/Program Files (x86)/MokaProject/
+libdir=C:/Program Files (x86)/MokaProject/lib
+includedir=C:/Program Files (x86)/MokaProject/../include/include
+
+Name: MokaProject
+Description: Import various well-known 3D model formats in an uniform manner.
+Version: 5.0.0
+Libs: -L${libdir} -lassimp
+Libs.private: -lstdc++ 
+Cflags: -I${includedir}

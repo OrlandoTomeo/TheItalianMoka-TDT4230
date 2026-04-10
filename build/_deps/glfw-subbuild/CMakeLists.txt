@@ -19,7 +19,7 @@ project(glfw-populate NONE)
 
 include(ExternalProject)
 ExternalProject_Add(glfw-populate
-                     "UPDATE_DISCONNECTED" "False" "DOWNLOAD_EXTRACT_TIMESTAMP" "TRUE" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "URL" "https://github.com/glfw/glfw/releases/download/3.3.8/glfw-3.3.8.zip"
+                     "UPDATE_DISCONNECTED" "False" "DOWNLOAD_EXTRACT_TIMESTAMP" "FALSE" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "URL" "https://github.com/glfw/glfw/releases/download/3.3.8/glfw-3.3.8.zip"
                     SOURCE_DIR          "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-src"
                     BINARY_DIR          "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/glfw-build"
                     CONFIGURE_COMMAND   ""

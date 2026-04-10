@@ -1,27 +1,20 @@
 #version 430 core
 out vec4 FragColor;
 
-in vec3 TexCoords;
+in vec2 TexCoords;
 in vec3 WorldPos;
 in vec3 Normal;
 
-// uniforms per le texture e la luce
 uniform vec3 camPos;
-uniform samplerCube skybox; // Per i riflessi (Fase 2)
-uniform float roughness;    // Per le micro-faccette (Fase 3)
+// Lasciamo le uniform preparate per dopo
+uniform samplerCube skybox; 
+uniform float roughness;    
 uniform float metallic;
 
 void main() {
-    vec3 N = normalize(Normal);
-    vec3 V = normalize(camPos - WorldPos);
+    // DEBUG TEMPORANEO: Usiamo le normali per dare colore al cubo
+    // Mappiamo le normali da [-1, 1] a [0, 1] per ottenere colori validi
+    vec3 debugColor = normalize(Normal) * 0.5 + 0.5;
     
-    // Vettore di riflessione per la cubemap
-    vec3 R = reflect(-V, N);
-    
-    // Sample base dalla cubemap
-    vec3 reflectionColor = texture(skybox, R).rgb;
-    
-    // Più avanti qui implementeremo la BRDF di Cook-Torrance per le micro-faccette!
-    
-    FragColor = vec4(reflectionColor, 1.0);
+    FragColor = vec4(debugColor, 1.0);
 }

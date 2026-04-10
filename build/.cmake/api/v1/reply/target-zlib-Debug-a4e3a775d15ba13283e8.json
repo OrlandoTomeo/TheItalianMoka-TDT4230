@@ -1,0 +1,414 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "_deps/assimp-build/contrib/zlib/libzlib.dll"
+		},
+		{
+			"path" : "_deps/assimp-build/contrib/zlib/libzlib.dll.a"
+		},
+		{
+			"path" : "_deps/assimp-build/contrib/zlib/libzlib.pdb"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"add_definitions",
+			"ADD_DEFINITIONS",
+			"add_compile_definitions",
+			"INCLUDE_DIRECTORIES",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"build/_deps/assimp-src/contrib/zlib/CMakeLists.txt",
+			"build/_deps/assimp-src/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 198,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 66,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 142,
+				"parent" : 3
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 57,
+				"parent" : 0
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 45,
+				"parent" : 6
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 219,
+				"parent" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 98,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-fno-strict-aliasing -fPIC  -g"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "NO_FSEEKO"
+				},
+				{
+					"backtrace" : 4,
+					"define" : "WIN32_LEAN_AND_MEAN"
+				},
+				{
+					"define" : "ZLIB_DLL"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "_LARGEFILE64_SOURCE=1"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "_SSIZE_T_DEFINED"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-build/include"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-build"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-src/include"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-src/code"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-src/."
+				},
+				{
+					"backtrace" : 9,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build/_deps/assimp-build/contrib/zlib"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			]
+		}
+	],
+	"id" : "zlib::@7fd99959cf8fe87d223a",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-shared",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "zlib",
+	"nameOnDisk" : "libzlib.dll",
+	"paths" : 
+	{
+		"build" : "_deps/assimp-build/contrib/zlib",
+		"source" : "build/_deps/assimp-src/contrib/zlib"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			]
+		},
+		{
+			"name" : "Object Files",
+			"sourceIndexes" : 
+			[
+				15
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				27
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/adler32.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/compress.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/crc32.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/deflate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/gzclose.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/gzlib.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/gzread.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/gzwrite.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inflate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/infback.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inftrees.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inffast.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/trees.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/uncompr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "build/_deps/assimp-src/contrib/zlib/zutil.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/_deps/assimp-build/contrib/zlib/zlib1rc.obj",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-build/contrib/zlib/zconf.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/zlib.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/crc32.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/deflate.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/gzguts.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inffast.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inffixed.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inflate.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/inftrees.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/trees.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/_deps/assimp-src/contrib/zlib/zutil.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/_deps/assimp-build/contrib/zlib/zlib1rc.obj.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

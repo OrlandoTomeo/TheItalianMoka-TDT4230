@@ -7,12 +7,6 @@
 },
 {
   "directory": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build",
-  "command": "C:\\MinGW\\bin\\g++.exe -D_SSIZE_T_DEFINED @CMakeFiles/MokaProject.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\MokaProject.dir\\src\\shader.cpp.obj -c C:\\Users\\orlan\\Desktop\\TheItalianMoka-TDT4230\\src\\shader.cpp",
-  "file": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/shader.cpp",
-  "output": "CMakeFiles/MokaProject.dir/src/shader.cpp.obj"
-},
-{
-  "directory": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/build",
   "command": "C:\\MinGW\\bin\\gcc.exe -D_SSIZE_T_DEFINED @CMakeFiles/MokaProject.dir/includes_C.rsp -g -o CMakeFiles\\MokaProject.dir\\src\\glad.c.obj -c C:\\Users\\orlan\\Desktop\\TheItalianMoka-TDT4230\\src\\glad.c",
   "file": "C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/glad.c",
   "output": "CMakeFiles/MokaProject.dir/src/glad.c.obj"

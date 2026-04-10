@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/MokaProject.dir/src/glad.c.obj.d"
   "CMakeFiles/MokaProject.dir/src/main.cpp.obj"
   "CMakeFiles/MokaProject.dir/src/main.cpp.obj.d"
-  "CMakeFiles/MokaProject.dir/src/shader.cpp.obj"
-  "CMakeFiles/MokaProject.dir/src/shader.cpp.obj.d"
   "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj"
   "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj.d"
   "MokaProject.exe"

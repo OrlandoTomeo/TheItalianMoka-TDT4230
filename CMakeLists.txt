@@ -65,9 +65,14 @@ FetchContent_MakeAvailable(assimp)
 # -------------------------------------------------------------------
 add_executable(MokaProject
     src/main.cpp
-    src/shader.cpp
+    #src/shader.cpp
     src/glad.c
     src/stb_image.cpp
+    src/Shader.h        
+    src/Model.h
+    #src/Camera.h
+    #src/PointLight.h
+    #src/ParticleSystem.h
 )
 
 target_include_directories(MokaProject PRIVATE 

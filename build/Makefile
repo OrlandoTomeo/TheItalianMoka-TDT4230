@@ -312,30 +312,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/shader.obj: src/shader.cpp.obj
-.PHONY : src/shader.obj
-
-# target to build an object file
-src/shader.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/shader.cpp.obj
-.PHONY : src/shader.cpp.obj
-
-src/shader.i: src/shader.cpp.i
-.PHONY : src/shader.i
-
-# target to preprocess a source file
-src/shader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/shader.cpp.i
-.PHONY : src/shader.cpp.i
-
-src/shader.s: src/shader.cpp.s
-.PHONY : src/shader.s
-
-# target to generate assembly for a file
-src/shader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/shader.cpp.s
-.PHONY : src/shader.cpp.s
-
 src/stb_image.obj: src/stb_image.cpp.obj
 .PHONY : src/stb_image.obj
 
@@ -386,9 +362,6 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
-	@echo ... src/shader.obj
-	@echo ... src/shader.i
-	@echo ... src/shader.s
 	@echo ... src/stb_image.obj
 	@echo ... src/stb_image.i
 	@echo ... src/stb_image.s

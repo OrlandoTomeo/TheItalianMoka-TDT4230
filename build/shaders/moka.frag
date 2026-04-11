@@ -3,6 +3,7 @@ out vec4 FragColor;
 
 in vec3 WorldPos;
 in vec3 Normal;
+in vec3 LocalPos; // RICEVE LA POSIZIONE DAL VERTEX SHADER
 
 uniform vec3 cameraPos;
 uniform samplerCube skybox;
@@ -16,10 +17,10 @@ uniform float fireQuadratic;
 
 const float PI = 3.14159265359;
 
-// Parametri Alluminio Satinato Moka
-const vec3  albedo    = vec3(0.7, 0.7, 0.7); 
-const float metallic  = 1.0;
-const float roughness = 0.45; 
+// Parametri base dell'Alluminio
+const vec3  albedoBase    = vec3(0.7, 0.7, 0.7); 
+const float metallicBase  = 1.0;
+const float roughnessBase = 0.45; 
 
 // Funzioni PBR
 float DistributionGGX(vec3 N, vec3 H, float a) {
@@ -44,14 +45,51 @@ void main() {
     vec3 V = normalize(cameraPos - WorldPos);
     vec3 R = reflect(-V, N);
 
-    vec3 F0 = mix(vec3(0.04), albedo, metallic);
+    // ====================================================
+    // IL TRUCCO DELLA BACHELITE (Plastica Nera Opaca)
+    // ====================================================
+    vec3 currentAlbedo = albedoBase;
+    float currentMetallic = metallicBase;
+    float currentRoughness = roughnessBase;
+
+    // 1. IL POMELLO (Taglio orizzontale in alto)
+    // Se colora troppo coperchio: ALZA il numero (es. 1.40)
+    // Se lascia la punta argentata: ABBASSA il numero (es. 1.30)
+    bool isKnob = LocalPos.y > 1.80; 
+
+    // 2. IL MANICO (Taglio verticale a sinistra)
+    // Se colora un pezzo di caldaia: Mettilo più negativo (es. -0.65, -0.70)
+    // Se lascia metà manico argentato: Mettilo meno negativo (es. -0.55, -0.50)
+    bool isHandle = (LocalPos.x < -0.48) && (LocalPos.y > 0.1); 
+
+    if (isKnob || isHandle) {
+        currentAlbedo = vec3(0.02, 0.02, 0.02); // Plastica Nera
+        currentMetallic = 0.0;                  // Zero riflessi metallici
+        currentRoughness = 0.85;                // Molto opaca, non scivolosa
+    }
+
+    // Calcoliamo F0 basandoci sulle nuove variabili
+    vec3 F0 = mix(vec3(0.04), currentAlbedo, currentMetallic);
 
     // ----------------------------------------------------
-    // 1. LUCE AMBIENTALE (Riflessi Skybox)
+    // 1. LUCE AMBIENTALE (Riflessi Skybox + ZENITALE)
     // ----------------------------------------------------
     vec3 fresnelAmbient = fresnelSchlick(max(dot(N, V), 0.0), F0);
-    vec3 envColor = textureLod(skybox, R, roughness * 7.0).rgb;
-    vec3 ambient = envColor * fresnelAmbient * 0.6; 
+    
+    // Attenzione: usiamo currentRoughness per i riflessi
+    vec3 envColor = textureLod(skybox, R, currentRoughness * 7.0).rgb;
+    vec3 skyboxReflect = envColor * fresnelAmbient * 0.6; 
+
+    float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
+    vec3 topLightColor = vec3(0.8, 0.85, 0.9); 
+    
+    vec3 kS_zenith = fresnelSchlick(max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0), F0);
+    vec3 kD_zenith = 1.0 - kS_zenith;
+    kD_zenith *= 1.0 - currentMetallic; // Usiamo currentMetallic
+
+    vec3 diffuseZenith = (kD_zenith * currentAlbedo) * topLightColor * upwardNormal * 0.4;
+    
+    vec3 ambient = skyboxReflect + diffuseZenith;
 
     // ----------------------------------------------------
     // 2. LUCE DINAMICA (Fuoco Sotto la Moka)
@@ -59,15 +97,14 @@ void main() {
     vec3 L = normalize(firePos - WorldPos);
     vec3 H = normalize(V + L);
     
-    // Attenuazione della luce (più ci allontaniamo dal fuoco, meno luce fa)
     float distance = length(firePos - WorldPos);
     float attenuation = 1.0 / (fireConstant + fireLinear * distance + fireQuadratic * (distance * distance));
     vec3 radiance = fireColor * attenuation;
 
-    // Calcolo PBR per la luce del fuoco
-    float NDF = DistributionGGX(N, H, roughness);   
-    float G   = GeometrySmith(max(dot(N, V), 0.0), max(dot(N, L), 0.0), roughness);      
-    vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       
+    // Usiamo currentRoughness per la specularità
+    float NDF = DistributionGGX(N, H, currentRoughness);   
+    float G   = GeometrySmith(max(dot(N, V), 0.0), max(dot(N, L), 0.0), currentRoughness);      
+    vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);        
         
     vec3 numerator    = NDF * G * F; 
     float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
@@ -75,17 +112,16 @@ void main() {
         
     vec3 kS = F;
     vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - metallic;	  
+    kD *= 1.0 - currentMetallic; // Usiamo currentMetallic
 
     float NdotL = max(dot(N, L), 0.0);        
-    vec3 fireIllumination = (kD * albedo / PI + specular) * radiance * NdotL;
+    vec3 fireIllumination = (kD * currentAlbedo / PI + specular) * radiance * NdotL;
 
     // ----------------------------------------------------
     // COMPOSIZIONE FINALE
     // ----------------------------------------------------
     vec3 color = ambient + fireIllumination;
     
-    // Gamma Correction
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2));
     

@@ -15,20 +15,43 @@ uniform float metallic;
 uniform float roughness;
 uniform bool isCastIron;
 
-// Funzione matematica per generare rumore (noise)
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
 void main() {
     vec3 N = normalize(Normal);
     vec3 V = normalize(cameraPos - WorldPos);
+    
+    vec3 finalAlbedo = albedo;
 
-    // 1. EFFETTO GHISA PROCEDURALE
+    // --- 1. EFFETTO MATTONELLE CUCINA A METÀ MURO ---
+    // Se la normale Y è quasi zero, significa che è un muro verticale
+    if (!isCastIron && abs(N.y) < 0.5) {
+        
+        // Se siamo nella parte bassa del muro (es. sotto Y = 0.2), disegniamo le piastrelle
+        if (WorldPos.y < 0.2) {
+            float tileSize = 0.4;         
+            float edgeThickness = 0.03;   
+            
+            vec2 grid = fract(vec2(WorldPos.x + WorldPos.z, WorldPos.y) / tileSize);
+            float mask = step(edgeThickness, grid.x) * step(edgeThickness, grid.y);
+            
+            vec3 groutColor = vec3(0.1, 0.1, 0.1); 
+            finalAlbedo = mix(groutColor, finalAlbedo, mask);
+        } 
+        // Se siamo esattamente sul confine (tra 0.2 e 0.23), disegniamo un bordino scuro
+        else if (WorldPos.y >= 0.2 && WorldPos.y < 0.23) {
+            finalAlbedo = vec3(0.15, 0.12, 0.1); // Colore del bordino
+        }
+        // Sopra 0.23 rimane l'intonaco liscio e pulito!
+    }
+
+    // --- 2. EFFETTO GHISA PROCEDURALE ---
     if (isCastIron) {
         float noise = hash(floor(WorldPos.xz * 300.0));
         N = normalize(N + vec3(noise * 0.15, 0.0, noise * 0.15));
     }
 
-    // 2. ILLUMINAZIONE DINAMICA DEL FUOCO
+    // --- 3. ILLUMINAZIONE ---
     vec3 L = normalize(firePos - WorldPos);
     vec3 H = normalize(V + L);
     float distance = length(firePos - WorldPos);
@@ -36,34 +59,22 @@ void main() {
     vec3 radiance = fireColor * attenuation;
 
     float NdotL = max(dot(N, L), 0.0);
-    vec3 diffuse = albedo * (1.0 - metallic) * NdotL;
+    vec3 diffuse = finalAlbedo * (1.0 - metallic) * NdotL;
     
-    // Glossiness basata sulla roughness
     float spec = pow(max(dot(N, H), 0.0), mix(2.0, 256.0, 1.0 - roughness));
-    vec3 specular = radiance * spec * mix(vec3(0.04), albedo, metallic);
+    vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic);
 
-    // 3. RIFLESSI DELL'AMBIENTE (Skybox)
     vec3 R = reflect(-V, N);
     vec3 envReflect = texture(skybox, R).rgb;
-    vec3 ambientSpec = envReflect * mix(vec3(0.04), albedo, metallic) * (1.0 - roughness);
+    vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * (1.0 - roughness);
 
-    // ----------------------------------------------------
-    // 4. LUCE ZENITALE (Hemispheric Light)
-    // ----------------------------------------------------
-    // Quanto la normale punta verso l'alto (Y positivo)
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
-    
-    // Colore morbido dall'alto (leggermente azzurro/freddo per contrastare il fuoco caldo)
     vec3 topLightColor = vec3(0.6, 0.65, 0.7); 
-    vec3 topLight = albedo * topLightColor * upwardNormal * 0.5; // Moltiplicatore di intensità
-    
-    // La luce base minima più la luce dall'alto
-    vec3 ambientDiff = (albedo * 0.05) + topLight; 
+    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.5; 
+    vec3 ambientDiff = (finalAlbedo * 0.05) + topLight; 
 
     // Composizione Finale
     vec3 finalColor = ambientDiff + ambientSpec + (diffuse + specular) * radiance;
-
-    // Tone mapping e Correzione Gamma
     finalColor = finalColor / (finalColor + vec3(1.0));
     finalColor = pow(finalColor, vec3(1.0/2.2));
 

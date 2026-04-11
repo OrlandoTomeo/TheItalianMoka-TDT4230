@@ -148,16 +148,8 @@ int main() {
         glClearColor(0.08f, 0.06f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // --- CAMERA ---
-        float radius = 5.0f; // Allargato leggermente per inquadrare anche il piano
-        float camSpeed = 0.6f; 
-        //float camX = sin(currentFrame * camSpeed) * radius;
-        //float camZ = cos(currentFrame * camSpeed) * radius;
-        
-        // Oscilla leggermente anche la Y per un effetto più cinematografico
+        // --- CAMERA FISSA ---
         float camY = 2.0f + sin(currentFrame * 0.3f) * 0.5f; 
-        
-        //glm::vec3 cameraPos = glm::vec3(camX, camY, camZ); 
         glm::vec3 cameraPos = glm::vec3(-3.2f, 1.8f, 3.8f);
         glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
         glm::mat4 view = glm::lookAt(cameraPos, target, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -174,7 +166,6 @@ int main() {
         mokaShader.setVec3("cameraPos", cameraPos);
         mokaShader.setMat4("view", view);
         mokaShader.setMat4("projection", projection);
-        
         mokaShader.setVec3("firePos", currentFirePos);
         mokaShader.setVec3("fireColor", fireColor);
         mokaShader.setFloat("fireConstant", 1.0f);
@@ -190,14 +181,13 @@ int main() {
         mokaModel = glm::rotate(mokaModel, glm::radians(19.4863f), glm::vec3(1.0f, 0.0f, 0.0f));
         mokaModel = glm::rotate(mokaModel, glm::radians(196.127f), glm::vec3(0.0f, 1.0f, 0.0f));
         mokaModel = glm::scale(mokaModel, glm::vec3(1.2f));
-
         mokaShader.setMat4("model", mokaModel);
         mokaBialetti.Draw(mokaShader);
 
         // =========================================================
-        // RENDER AMBIENTE (FORNELLO E PAVIMENTO CON NUOVO SHADER)
+        // 2. RENDER AMBIENTE (TUTTI GLI OGGETTI CON ENV SHADER)
         // =========================================================
-        envShader.use();
+        envShader.use(); // <--- QUESTO E' QUELLO CHE MANCAVA!
         envShader.setVec3("cameraPos", cameraPos);
         envShader.setMat4("view", view);
         envShader.setMat4("projection", projection);
@@ -208,33 +198,80 @@ int main() {
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         envShader.setInt("skybox", 0);
 
-        // --- 2. RENDER FORNELLO (METALLO SCURO RUVIDO E GHISA) ---
-        envShader.setVec3("albedo", glm::vec3(0.03f, 0.03f, 0.03f)); // Quasi nero
-        envShader.setFloat("metallic", 0.7f); // È metallo, ma grezzo
-        envShader.setFloat("roughness", 0.85f); // MOLTO Ruvido (non riflette a specchio)
+        // --- 2A. FORNELLO ---
+        envShader.setVec3("albedo", glm::vec3(0.03f, 0.03f, 0.03f)); 
+        envShader.setFloat("metallic", 0.7f); 
+        envShader.setFloat("roughness", 0.85f); 
         envShader.setInt("isCastIron", 1);
         glm::mat4 cylModel = glm::mat4(1.0f);
         cylModel = glm::translate(cylModel, glm::vec3(currentFirePos.x, -1.52f, currentFirePos.z));
         envShader.setMat4("model", cylModel);
-        
         glBindVertexArray(cylVAO);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 3. RENDER PAVIMENTO (MARMO SCURO LISCIO) ---
+        // --- 2B. PAVIMENTO ---
         envShader.setVec3("albedo", glm::vec3(0.12f, 0.09f, 0.07f)); 
-        envShader.setFloat("metallic", 0.0f); // Zero assoluto. Non è metallo.
-        envShader.setFloat("roughness", 0.90f); // Praticamente opaco al 100%
+        envShader.setFloat("metallic", 0.0f); 
+        envShader.setFloat("roughness", 0.90f); 
         envShader.setInt("isCastIron", 0);
-
         glm::mat4 floorModel = glm::mat4(1.0f);
         floorModel = glm::translate(floorModel, glm::vec3(0.0f, -1.55f, 0.0f));
         envShader.setMat4("model", floorModel);
-        
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         // =========================================================
-        // 4. RENDER PARTICELLE
+        // 2C. MURI DELLA CUCINA (Opachi al 100%)
+        // =========================================================
+        envShader.setVec3("albedo", glm::vec3(0.85f, 0.82f, 0.75f)); 
+        envShader.setFloat("metallic", 0.0f);  
+        
+        // FIX RIFLESSO: Portiamo la roughness quasi al massimo (0.95). 
+        // Ora il muro è puro colore/intonaco opaco e non riflette la luce come vetro.
+        envShader.setFloat("roughness", 0.95f);  
+        envShader.setInt("isCastIron", 0); 
+        
+        // MURO POSTERIORE
+        glm::mat4 wallModel = glm::mat4(1.0f);
+        wallModel = glm::translate(wallModel, glm::vec3(0.0f, -1.0f, -4.0f)); 
+        wallModel = glm::rotate(wallModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        envShader.setMat4("model", wallModel);
+        glBindVertexArray(floorVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        // MURO DI DESTRA
+        glm::mat4 rightWall = glm::mat4(1.0f);
+        rightWall = glm::translate(rightWall, glm::vec3(4.0f, -1.0f, 0.0f)); 
+        rightWall = glm::rotate(rightWall, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        envShader.setMat4("model", rightWall);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+        // =========================================================
+        // 2D. MENSOLINE DI LEGNO MODERNE
+        // =========================================================
+        // Usiamo un bel marrone caldo e opaco per simulare il legno opaco
+        envShader.setVec3("albedo", glm::vec3(0.25f, 0.15f, 0.08f)); 
+        envShader.setFloat("metallic", 0.0f);
+        envShader.setFloat("roughness", 0.85f); 
+        
+        // Mensola 1 (In alto a sinistra)
+        glm::mat4 shelf1 = glm::mat4(1.0f);
+        shelf1 = glm::translate(shelf1, glm::vec3(-1.8f, 1.2f, -3.8f)); // Attaccata al muro
+        // La schiacciamo in Y e la allarghiamo in X. Essendo un cilindro, verrà fuori una mensola con i bordi stondati!
+        shelf1 = glm::scale(shelf1, glm::vec3(3.0f, 0.1f, 0.8f)); 
+        envShader.setMat4("model", shelf1);
+        glBindVertexArray(cylVAO);
+        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
+        // Mensola 2 (Più in basso verso destra)
+        glm::mat4 shelf2 = glm::mat4(1.0f);
+        shelf2 = glm::translate(shelf2, glm::vec3(1.2f, 0.5f, -3.8f)); 
+        shelf2 = glm::scale(shelf2, glm::vec3(2.5f, 0.1f, 0.8f)); 
+        envShader.setMat4("model", shelf2);
+        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        // =========================================================
+        // 3. RENDER PARTICELLE (SEMPRE PER ULTIME!)
         // =========================================================
         fireSystem.Update(deltaTime);
         steamSystem.Update(deltaTime);
@@ -248,6 +285,7 @@ int main() {
         steamSystem.Draw(particleShader);
         glDepthMask(GL_TRUE); 
 
+        // CHIUSURA FRAME
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

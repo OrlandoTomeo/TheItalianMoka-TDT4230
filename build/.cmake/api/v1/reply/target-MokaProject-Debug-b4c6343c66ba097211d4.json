@@ -194,10 +194,6 @@
 	[
 		{
 			"backtrace" : 2,
-			"id" : "glfw::@fa9f4482d3a2b070f206"
-		},
-		{
-			"backtrace" : 2,
 			"id" : "zlibstatic::@7fd99959cf8fe87d223a"
 		},
 		{
@@ -207,6 +203,10 @@
 		{
 			"backtrace" : 2,
 			"id" : "assimp::@b1ea6f5c2178ebc90389"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glfw::@fa9f4482d3a2b070f206"
 		}
 	],
 	"id" : "MokaProject::@6890427a1f51a3e7e1df",

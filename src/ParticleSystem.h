@@ -38,12 +38,54 @@ public:
 
     void Update(float dt) {
         particleData.clear();
+        
+        // Calcoliamo la direzione verso cui spinge il beccuccio.
+        // Essendo scentrato rispetto a (0,0,0), la sua posizione X e Z ci indica 
+        // esattamente la direzione "in avanti" per allontanarsi dalla moka!
+        glm::vec3 outwardDir = glm::vec3(0.0f);
+        if(!isAdditive) { // Se è il vapore
+            outwardDir = glm::normalize(glm::vec3(spawnPos.x, 0.0f, spawnPos.z));
+        }
+
         for(auto& p : particles) {
             p.Life -= dt;
             if(p.Life > 0.0f) {
-                p.Position += p.Velocity * dt;
-                p.Color.a = (p.Life / 2.0f); // Fade out over time
                 
+                // --- INIZIO FAKE COLLISION COPERCHIO ---
+                if (!isAdditive) { // Solo per il vapore
+                    // Definiamo a che altezza si trova il coperchio rispetto alla nascita del vapore
+                    // (0.15f significa poco sopra il beccuccio. Modificalo se sbatte troppo presto o tardi)
+                    float lidHeight = spawnPos.y + 1.1f; 
+
+                    float currentLidHeight = lidHeight + (p.Position.x * 0.2f) + (p.Position.z * 0.1f);
+                    
+                    if (p.Position.y > currentLidHeight) {
+                        // 1. Il vapore sbatte: smorziamo la sua velocità di salita (Y)
+                        p.Velocity.y *= 0.75f; 
+                        
+                        float slideX = -0.9f; // Spinta a sinistra/destra
+                        float slideY =  0.45f; // SPINTA VERSO L'ALTO (Fa scivolare lungo il coperchio!)
+                        float slideZ = -0.3f; // Spinta avanti/indietro
+                        
+                        p.Velocity.x = slideX;
+                        p.Velocity.y = slideY;
+                        p.Velocity.z = slideZ;
+                        
+                        // 3. Aggiungiamo un po' di turbolenza per farlo allargare ai lati (effetto nuvola)
+                        p.Velocity.x += randomFloat(-0.5f, 0.5f);
+                        p.Velocity.y += randomFloat(-0.1f, 0.1f);
+                        p.Velocity.z += randomFloat(-0.5f, 0.5f);
+                    }
+                }
+                // --- FINE FAKE COLLISION ---
+
+                // Applica la velocità alla posizione
+                p.Position += p.Velocity * dt;
+                
+                // Fai svanire dolcemente la particella nel tempo
+                p.Color.a = (p.Life / 1.0f); 
+                
+                // Salva i dati per la scheda video
                 particleData.push_back(p.Position.x); particleData.push_back(p.Position.y); particleData.push_back(p.Position.z);
                 particleData.push_back(p.Color.r); particleData.push_back(p.Color.g); particleData.push_back(p.Color.b); particleData.push_back(p.Color.a);
                 particleData.push_back(p.Size);

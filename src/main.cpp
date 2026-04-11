@@ -125,7 +125,7 @@ int main() {
 
         // --- CAMERA ---
         float radius = 4.5f;
-        float camSpeed = 0.1f; 
+        float camSpeed = 0.3f; 
         float camX = sin(currentFrame * camSpeed) * radius;
         float camZ = cos(currentFrame * camSpeed) * radius;
         glm::vec3 cameraPos = glm::vec3(camX, 2.5f, camZ); 

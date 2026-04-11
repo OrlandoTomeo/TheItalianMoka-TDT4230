@@ -80,18 +80,31 @@ private:
     }
 
     void resetParticle(Particle& p) {
-        p.Position = spawnPos + glm::vec3(randomFloat(-0.05f, 0.05f), 0.0f, randomFloat(-0.05f, 0.05f));
-        if(isAdditive) { // Configurazione Fuoco
-            p.Velocity = glm::vec3(randomFloat(-0.2f, 0.2f), randomFloat(0.2f, 0.6f), randomFloat(-0.2f, 0.2f));
-            p.Color = glm::vec4(1.0f, randomFloat(0.2f, 0.6f), 0.0f, 1.0f);
-            p.Size = randomFloat(0.1f, 0.3f);
-            p.Life = randomFloat(0.5f, 1.2f);
-        } else { // Configurazione Vapore
-            p.Velocity = glm::vec3(randomFloat(-0.1f, 0.1f), randomFloat(0.5f, 1.0f), randomFloat(-0.1f, 0.1f));
-            p.Color = glm::vec4(0.9f, 0.9f, 0.9f, 0.4f);
-            p.Size = randomFloat(0.2f, 0.6f);
-            p.Life = randomFloat(1.0f, 2.5f);
+        if(isAdditive) { // CONFIGURAZIONE FUOCO (FORNELLO AD ANELLO)
+            // Crea un anello invece di un punto centrale
+            float angle = randomFloat(0.0f, 3.14159f * 2.0f); // Angolo casuale a 360 gradi
+            float ringRadius = randomFloat(0.55f, 0.75f);     // Raggio del fornello (allargalo se serve)
+            
+            p.Position = spawnPos + glm::vec3(cos(angle) * ringRadius, randomFloat(-0.05f, 0.05f), sin(angle) * ringRadius);
+            
+            // Il fuoco va verso l'alto e leggermente verso il centro (per avvolgere la moka)
+            p.Velocity = glm::vec3(cos(angle + 3.14f)*0.1f, randomFloat(0.4f, 0.8f), sin(angle + 3.14f)*0.1f);
+            
+            // Colori caldi e vibranti (Giallo/Arancio base)
+            p.Color = glm::vec4(1.0f, randomFloat(0.3f, 0.7f), 0.1f, 1.0f);
+            p.Size = randomFloat(0.15f, 0.35f);
+            p.Life = randomFloat(0.4f, 1.0f); // Vita breve, fiamma nervosa
+            
+        } else { // CONFIGURAZIONE VAPORE (PUNTO SINGOLO SUL BECCUCCIO)
+            p.Position = spawnPos + glm::vec3(randomFloat(-0.05f, 0.05f), 0.0f, randomFloat(-0.05f, 0.05f));
+            p.Velocity = glm::vec3(randomFloat(-0.1f, 0.1f), randomFloat(0.8f, 1.5f), randomFloat(-0.1f, 0.1f));
+            p.Color = glm::vec4(0.9f, 0.9f, 0.9f, 0.3f); // Vapore più trasparente
+            p.Size = randomFloat(0.3f, 0.8f);
+            p.Life = randomFloat(1.5f, 3.0f);
         }
+    }
+    void setSpawnPosition(glm::vec3 newPos) {
+        spawnPos = newPos;
     }
 };
 #endif

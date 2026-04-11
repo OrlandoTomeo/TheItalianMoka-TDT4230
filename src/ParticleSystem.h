@@ -18,14 +18,14 @@ public:
     ParticleSystem(int maxParticles, glm::vec3 spawnPos, bool isAdditive)
         : maxParticles(maxParticles), spawnPos(spawnPos), isAdditive(isAdditive) {
         particles.resize(maxParticles);
-        for(int i=0; i<maxParticles; ++i) resetParticle(particles[i]);
+        for(int i = 0; i < maxParticles; ++i) resetParticle(particles[i]);
         
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // Riserviamo memoria: 8 float per particella (3 Pos, 4 Color, 1 Size)
+        // Reserve memory: 8 floats per particle (3 Pos, 4 Color, 1 Size)
         glBufferData(GL_ARRAY_BUFFER, maxParticles * 8 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
         
         glEnableVertexAttribArray(0); 
@@ -42,7 +42,7 @@ public:
             p.Life -= dt;
             if(p.Life > 0.0f) {
                 p.Position += p.Velocity * dt;
-                p.Color.a = (p.Life / 2.0f); // Dissolvenza
+                p.Color.a = (p.Life / 2.0f); // Fade out over time
                 
                 particleData.push_back(p.Position.x); particleData.push_back(p.Position.y); particleData.push_back(p.Position.z);
                 particleData.push_back(p.Color.r); particleData.push_back(p.Color.g); particleData.push_back(p.Color.b); particleData.push_back(p.Color.a);
@@ -58,13 +58,19 @@ public:
     void Draw(Shader& shader) {
         glEnable(GL_PROGRAM_POINT_SIZE);
         glEnable(GL_BLEND);
-        // Blending additivo per il fuoco, normale per il fumo
+        
+        // Additive blending for fire (glow), standard alpha blending for steam
         if(isAdditive) glBlendFunc(GL_SRC_ALPHA, GL_ONE); 
         else glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
         
         glBindVertexArray(VAO);
         glDrawArrays(GL_POINTS, 0, particleData.size() / 8);
         glDisable(GL_BLEND);
+    }
+
+    // Utility function to update spawn position dynamically
+    void setSpawnPosition(glm::vec3 newPos) {
+        spawnPos = newPos;
     }
 
 private:
@@ -80,31 +86,28 @@ private:
     }
 
     void resetParticle(Particle& p) {
-        if(isAdditive) { // CONFIGURAZIONE FUOCO (FORNELLO AD ANELLO)
-            // Crea un anello invece di un punto centrale
-            float angle = randomFloat(0.0f, 3.14159f * 2.0f); // Angolo casuale a 360 gradi
-            float ringRadius = randomFloat(0.55f, 0.75f);     // Raggio del fornello (allargalo se serve)
+        if(isAdditive) { 
+            // FIRE CONFIGURATION (Ring Burner)
+            float angle = randomFloat(0.0f, 3.14159f * 2.0f); 
+            float ringRadius = 0.65f; // Radius of the gas burner ring
             
-            p.Position = spawnPos + glm::vec3(cos(angle) * ringRadius, randomFloat(-0.05f, 0.05f), sin(angle) * ringRadius);
+            p.Position = spawnPos + glm::vec3(cos(angle) * ringRadius, randomFloat(-0.02f, 0.02f), sin(angle) * ringRadius);
+            p.Velocity = glm::vec3(0.0f, randomFloat(0.4f, 0.8f), 0.0f); // Move straight up
             
-            // Il fuoco va verso l'alto e leggermente verso il centro (per avvolgere la moka)
-            p.Velocity = glm::vec3(cos(angle + 3.14f)*0.1f, randomFloat(0.4f, 0.8f), sin(angle + 3.14f)*0.1f);
-            
-            // Colori caldi e vibranti (Giallo/Arancio base)
+            // Warm orange/yellow colors
             p.Color = glm::vec4(1.0f, randomFloat(0.3f, 0.7f), 0.1f, 1.0f);
             p.Size = randomFloat(0.15f, 0.35f);
-            p.Life = randomFloat(0.4f, 1.0f); // Vita breve, fiamma nervosa
-            
-        } else { // CONFIGURAZIONE VAPORE (PUNTO SINGOLO SUL BECCUCCIO)
+            p.Life = randomFloat(0.4f, 0.8f); // Short life for flickering flames
+        } else { 
+            // STEAM CONFIGURATION (Single Point Spout)
             p.Position = spawnPos + glm::vec3(randomFloat(-0.05f, 0.05f), 0.0f, randomFloat(-0.05f, 0.05f));
             p.Velocity = glm::vec3(randomFloat(-0.1f, 0.1f), randomFloat(0.8f, 1.5f), randomFloat(-0.1f, 0.1f));
-            p.Color = glm::vec4(0.9f, 0.9f, 0.9f, 0.3f); // Vapore più trasparente
+            
+            // Soft transparent white/grey
+            p.Color = glm::vec4(0.9f, 0.9f, 0.9f, 0.3f); 
             p.Size = randomFloat(0.3f, 0.8f);
             p.Life = randomFloat(1.5f, 3.0f);
         }
-    }
-    void setSpawnPosition(glm::vec3 newPos) {
-        spawnPos = newPos;
     }
 };
 #endif

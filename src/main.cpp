@@ -168,11 +168,12 @@ int main() {
         // =========================================================
         // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DALLA LUCE)
         // =========================================================
-        // SPOSTIAMO LA LUCE: X a 6.0 (a destra), Y a 12.0 (più in alto), Z a 4.0 (in avanti)
-        glm::vec3 lightPos = glm::vec3(6.0f, 12.0f, 4.0f); 
-        // Allarghiamo la telecamera ortogonale per far entrare tutta la cucina
-        glm::mat4 lightProjection = glm::ortho(-12.0f, 12.0f, -12.0f, 12.0f, 1.0f, 25.0f);
-        glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::vec3 lightPos = glm::vec3(0.0f, 15.0f, 0.0f); 
+        
+        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 25.0f);
+        
+        // FIX MATEMATICO: Se guarda in basso, l'Up Vector deve essere (0,0,-1)
+        glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f));
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
@@ -201,15 +202,18 @@ int main() {
         glm::mat4 sh2 = glm::mat4(1.0f); sh2 = glm::translate(sh2, glm::vec3(-0.6f, 0.9f, -3.8f)); sh2 = glm::scale(sh2, glm::vec3(2.5f, 1.12f, 0.6f)); 
         shadowShader.setMat4("model", sh2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        glm::mat4 shR = glm::mat4(1.0f); shR = glm::translate(shR, glm::vec3(5.9f, 1.2f, 1.0f)); shR = glm::scale(shR, glm::vec3(1.0f, 1.12f, 2.5f)); 
+        // MENSOLA DESTRA FIXATA: X a 4.3f
+        glm::mat4 shR = glm::mat4(1.0f); shR = glm::translate(shR, glm::vec3(4.3f, 1.2f, 1.0f)); shR = glm::scale(shR, glm::vec3(1.0f, 1.12f, 2.5f)); 
         shadowShader.setMat4("model", shR); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         // Tazzine (Ne bastano le forme base per fare un'ottima ombra)
         glm::mat4 c1 = glm::mat4(1.0f); c1 = glm::translate(c1, glm::vec3(-0.2f, 1.05f, -3.75f)); c1 = glm::scale(c1, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c1); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         glm::mat4 c2 = glm::mat4(1.0f); c2 = glm::translate(c2, glm::vec3(0.4f, 1.05f, -3.75f)); c2 = glm::scale(c2, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         glm::mat4 c3 = glm::mat4(1.0f); c3 = glm::translate(c3, glm::vec3(-1.5f, 1.75f, -3.75f)); c3 = glm::scale(c3, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c3); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
-        glm::mat4 c4 = glm::mat4(1.0f); c4 = glm::translate(c4, glm::vec3(3.8f, 1.35f, 0.4f)); c4 = glm::scale(c4, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c4); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
-        glm::mat4 c5 = glm::mat4(1.0f); c5 = glm::translate(c5, glm::vec3(3.8f, 1.35f, 1.0f)); c5 = glm::scale(c5, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c5); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        
+        // TAZZINE DESTRA FIXATE: X a 4.3f
+        glm::mat4 c4 = glm::mat4(1.0f); c4 = glm::translate(c4, glm::vec3(4.3f, 1.35f, 0.4f)); c4 = glm::scale(c4, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c4); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c5 = glm::mat4(1.0f); c5 = glm::translate(c5, glm::vec3(4.3f, 1.35f, 1.0f)); c5 = glm::scale(c5, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c5); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -423,8 +427,8 @@ int main() {
         
         // TUBO DESTRA 1 (Più verso il fondo)
         glm::mat4 pipeRight1 = glm::mat4(1.0f);
-        // X=3.8f (Vicino al muro). Y=1.5f (Centrato sulla mensola). Z=-3.2f (Verso il fondo)
-        pipeRight1 = glm::translate(pipeRight1, glm::vec3(3.8f, 1.5f, 0.2f)); 
+        // TUBI DESTRA FIXATI: X a 4.3f
+        pipeRight1 = glm::translate(pipeRight1, glm::vec3(4.3f, 1.5f, 0.2f)); 
         // Scala Y per l'altezza del tubo
         pipeRight1 = glm::scale(pipeRight1, glm::vec3(0.04f, 1.2f, 0.04f)); 
         envShader.setMat4("model", pipeRight1);
@@ -433,8 +437,8 @@ int main() {
 
         // TUBO DESTRA 2 (Più verso la telecamera)
         glm::mat4 pipeRight2 = glm::mat4(1.0f);
-        // Z=-1.8f (Più avanti rispetto al primo tubo)
-        pipeRight2 = glm::translate(pipeRight2, glm::vec3(3.8f, 1.5f, 1.8f)); 
+        // TUBI DESTRA FIXATI: X a 4.3f
+        pipeRight2 = glm::translate(pipeRight2, glm::vec3(4.3f, 1.5f, 1.8f)); 
         pipeRight2 = glm::scale(pipeRight2, glm::vec3(0.04f, 1.2f, 0.04f)); 
         envShader.setMat4("model", pipeRight2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
@@ -444,15 +448,16 @@ int main() {
         envShader.setFloat("metallic", 0.9f);
         envShader.setFloat("roughness", 0.6f); 
         
+        // TUBI SINISTRA FIXATI: Sprofondati nel muro a Z = -3.95f
         glm::mat4 pipe1 = glm::mat4(1.0f);
-        pipe1 = glm::translate(pipe1, glm::vec3(-1.6f, 1.3f, -3.8f)); 
+        pipe1 = glm::translate(pipe1, glm::vec3(-1.6f, 1.3f, -3.95f)); 
         pipe1 = glm::scale(pipe1, glm::vec3(0.04f, 1.8f, 0.04f)); 
         envShader.setMat4("model", pipe1);
         glBindVertexArray(cylVAO);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 pipe2 = glm::mat4(1.0f);
-        pipe2 = glm::translate(pipe2, glm::vec3(0.2f, 1.3f, -3.8f)); 
+        pipe2 = glm::translate(pipe2, glm::vec3(0.2f, 1.3f, -3.95f)); 
         pipe2 = glm::scale(pipe2, glm::vec3(0.04f, 1.8f, 0.04f)); 
         envShader.setMat4("model", pipe2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
@@ -476,9 +481,9 @@ int main() {
         envShader.setMat4("model", shelf2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // MENSOLA DESTRA
+        // MENSOLA DESTRA FIXATA: X a 4.3f
         glm::mat4 shelfRight = glm::mat4(1.0f);
-        shelfRight = glm::translate(shelfRight, glm::vec3(4.2f, 1.2f, 1.0f)); 
+        shelfRight = glm::translate(shelfRight, glm::vec3(4.3f, 1.2f, 1.0f)); 
         shelfRight = glm::scale(shelfRight, glm::vec3(1.0f, 1.12f, 2.5f)); 
         envShader.setMat4("model", shelfRight);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
@@ -536,29 +541,29 @@ int main() {
         envShader.setMat4("model", handle2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 4. TAZZINA DESTRA 1 (Sulla mensola) ---
+        // --- 4. TAZZINA DESTRA 1 (Sulla mensola FIXATA: X a 4.3f) ---
         glm::mat4 cup4 = glm::mat4(1.0f);
-        cup4 = glm::translate(cup4, glm::vec3(3.8f, 1.35f, 0.4f)); // Y alzata a 1.35f
+        cup4 = glm::translate(cup4, glm::vec3(4.3f, 1.35f, 0.4f)); 
         cup4 = glm::scale(cup4, glm::vec3(0.20f, 6.5f, 0.20f)); 
         envShader.setMat4("model", cup4);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 handle4 = glm::mat4(1.0f);
-        handle4 = glm::translate(handle4, glm::vec3(3.8f, 1.42f, 0.24f)); // Z riposizionata per sporgere
+        handle4 = glm::translate(handle4, glm::vec3(4.3f, 1.42f, 0.24f)); 
         handle4 = glm::rotate(handle4, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
         handle4 = glm::scale(handle4, glm::vec3(0.08f, 1.8f, 0.08f)); 
         envShader.setMat4("model", handle4);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 5. TAZZINA DESTRA 2 ---
+        // --- 5. TAZZINA DESTRA 2 (FIXATA: X a 4.3f) ---
         glm::mat4 cup5 = glm::mat4(1.0f);
-        cup5 = glm::translate(cup5, glm::vec3(3.8f, 1.35f, 1.0f)); 
+        cup5 = glm::translate(cup5, glm::vec3(4.3f, 1.35f, 1.0f)); 
         cup5 = glm::scale(cup5, glm::vec3(0.20f, 6.5f, 0.20f)); 
         envShader.setMat4("model", cup5);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 handle5 = glm::mat4(1.0f);
-        handle5 = glm::translate(handle5, glm::vec3(3.8f, 1.42f, 0.84f));
+        handle5 = glm::translate(handle5, glm::vec3(4.3f, 1.42f, 0.84f));
         handle5 = glm::rotate(handle5, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         handle5 = glm::scale(handle5, glm::vec3(0.08f, 1.8f, 0.08f)); 
         envShader.setMat4("model", handle5);

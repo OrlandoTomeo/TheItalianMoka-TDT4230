@@ -142,7 +142,7 @@ int main() {
         if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) 
             glfwSetWindowShouldClose(window, true);
 
-        glClearColor(0.75f, 0.78f, 0.82f, 1.0f);
+        glClearColor(0.01f, 0.01f, 0.02f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float camY = 2.0f + sin(currentFrame * 0.3f) * 0.5f; 

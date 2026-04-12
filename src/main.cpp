@@ -130,7 +130,30 @@ int main() {
     ParticleSystem fireSystem(150, currentFirePos, 0); 
     ParticleSystem steamSystem(50, currentSteamPos, 1); 
     ParticleSystem coffeeSystem(5, coffeeSpoutPos, 2);
+    // === SHADOW MAPPING SETUP ===
+    const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
+    unsigned int depthMapFBO;
+    glGenFramebuffers(1, &depthMapFBO);
 
+    unsigned int depthMap;
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    // Evita che le ombre si ripetano fuori dai bordi
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    Shader shadowShader("shaders/shadow.vert", "shaders/shadow.frag");
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
@@ -142,6 +165,50 @@ int main() {
         if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) 
             glfwSetWindowShouldClose(window, true);
 
+        // =========================================================
+        // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DAL SOFFITTO)
+        // =========================================================
+        glm::vec3 lightPos = glm::vec3(0.0f, 10.0f, 1.0f); // Luce alta, leggermente avanti
+        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
+        glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+        // Diciamo a OpenGL di disegnare nella memoria nascosta (2048x2048)
+        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+        glClear(GL_DEPTH_BUFFER_BIT); // Puliamo solo la profondità
+        
+        shadowShader.use();
+        shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+        // Disegniamo la moka "ombra"
+        glm::mat4 mokaShadowModel = glm::mat4(1.0f);
+        mokaShadowModel = glm::translate(mokaShadowModel, glm::vec3(0.0f, -0.8f, 0.0f));
+        mokaShadowModel = glm::rotate(mokaShadowModel, glm::radians(19.4863f), glm::vec3(1.0f, 0.0f, 0.0f));
+        mokaShadowModel = glm::rotate(mokaShadowModel, glm::radians(196.127f), glm::vec3(0.0f, 1.0f, 0.0f));
+        mokaShadowModel = glm::scale(mokaShadowModel, glm::vec3(1.2f));
+        shadowShader.setMat4("model", mokaShadowModel);
+        mokaBialetti.Draw(shadowShader);
+
+        // Disegniamo la mensola di sinistra per farle fare ombra
+        glBindVertexArray(cylVAO);
+        glm::mat4 shelfShadow = glm::mat4(1.0f);
+        shelfShadow = glm::translate(shelfShadow, glm::vec3(-0.6f, 1.6f, -3.8f)); 
+        shelfShadow = glm::scale(shelfShadow, glm::vec3(2.5f, 1.12f, 0.6f)); 
+        shadowShader.setMat4("model", shelfShadow);
+        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        
+        // Sganciamo la memoria nascosta. La "foto" è pronta!
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+        // =========================================================
+        // PASS 2: RENDER NORMALE DELLA SCENA (Tuo codice originale!)
+        // =========================================================
+        // IMPORTANTISSIMO: Rimettiamo la grandezza dello schermo normale!
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); 
+
+        // Da qui in poi è esattamente il tuo codice di prima
         glClearColor(0.01f, 0.01f, 0.02f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -189,9 +256,15 @@ int main() {
         envShader.setVec3("firePos", currentFirePos);
         envShader.setVec3("fireColor", fireColor);
         
+        envShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         envShader.setInt("skybox", 0);
+
+        glActiveTexture(GL_TEXTURE1);                            
+        glBindTexture(GL_TEXTURE_2D, depthMap);                  
+        envShader.setInt("shadowMap", 1);
 
         // ---- 2A. MATERIALE GHISA ----
         envShader.setVec3("albedo", glm::vec3(0.01f, 0.01f, 0.01f)); 

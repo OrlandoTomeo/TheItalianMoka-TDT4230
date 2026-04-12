@@ -116,55 +116,52 @@ void main() {
         N = normalize(N + noiseVec * 0.25); 
     }
 
-    // --- 3. PBR LIGHTING ---
+   // --- 3. PBR LIGHTING (FUOCO SOTTO LA MOKA) ---
     vec3 L = normalize(firePos - WorldPos);
     vec3 H = normalize(V + L);
     float distance = length(firePos - WorldPos);
     float attenuation = 1.0 / (1.0 + 0.07 * distance + 0.020 * (distance * distance));
-    vec3 radiance = fireColor * attenuation;
+    
+    // Ombra euristica per il fuoco (se non guarda il fuoco, è buio)
+    float fireShadow = smoothstep(0.0, 0.2, max(dot(N, L), 0.0));
+    if (WorldPos.y > firePos.y + 0.5 && N.y > 0.5) fireShadow *= 0.1; // Scurisce sopra
+    vec3 radiance = fireColor * attenuation * fireShadow; 
 
+    // Diffuse e Specular del fuoco
     float NdotL = max(dot(N, L), 0.0);
     float NdotH = max(dot(N, H), 0.0);
-    
-    // === SHADOW FROM DEPTH MAP ===
-    float shadow = ShadowCalculation(FragPosLightSpace, N, L);
-    
-    // Apply shadow to direct lighting
-    float shadowFactor = 1.0 - (shadow * 0.8);  // 80% shadow intensity, 20% ambient in shadow
-    radiance *= shadowFactor;
-    
-    // DIFFUSE
     vec3 diffuse = finalAlbedo * (1.0 - metallic) * NdotL;
     
-    // SPECULAR WITH METAL ENHANCEMENT
     float roughSq = roughness * roughness;
-    roughSq *= roughSq; 
     float spec = pow(max(NdotH, 0.0), mix(2.0, 256.0, 1.0 - roughness));
-    float specularIntensity = mix(0.5, 2.5, metallic);
+    float specularIntensity = mix(0.5, 3.5, metallic);
     vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic) * specularIntensity;
 
-    // AMBIENT REFLECTIONS
-    vec3 R = reflect(-V, N);
-    vec3 envReflect = texture(skybox, R).rgb;
-    float envIntensity = (1.0 - roughness) * metallic;
-    vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * envIntensity * 0.6;
+    // --- 4. OMBRE DAL SOFFITTO (SHADOW MAPPING) ---
+    // Calcoliamo la direzione della luce dal soffitto (che abbiamo messo in main.cpp)
+    vec3 lightTopDir = normalize(vec3(0.0, 10.0, 1.0) - WorldPos);
+    float shadow = ShadowCalculation(FragPosLightSpace, N, lightTopDir);
+    float shadowFactor = 1.0 - (shadow * 0.9); // Ombra al 90%
 
-    // AMBIENT DIFFUSE
+    // --- 5. LUCE AMBIENTALE ---
+    vec3 R = reflect(-V, N);
+    vec3 envReflect = texture(skybox, R).rgb * 0.02; // Skybox quasi spenta
+    vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * (1.0 - roughness);
+
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
     vec3 topLightColor = vec3(0.35, 0.40, 0.45);
-    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.6;
     
-    float downwardNormal = max(dot(N, vec3(0.0, -1.0, 0.0)), 0.0);
-    vec3 bottomLightColor = vec3(0.8, 0.3, 0.1);
-    vec3 bottomLight = finalAlbedo * bottomLightColor * downwardNormal * 0.3;
+    // LA MAGIA: L'ombra spegne SOLO la luce ambientale dall'alto!
+    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.6 * shadowFactor; 
     
-    // In shadow, boost ambient to prevent complete darkness
-    vec3 ambientDiff = (finalAlbedo * (0.08 + shadow * 0.15)) + topLight + bottomLight;
+    vec3 ambientDiff = (finalAlbedo * 0.01) + topLight;
 
-    // FINAL COMPOSITION
+    // --- COMPOSIZIONE FINALE ---
     vec3 finalColor = ambientDiff + ambientSpec + (diffuse + specular) * radiance;
     
-    finalColor = finalColor / (finalColor + vec3(0.9));
+    // Esposizione per contrasto
+    finalColor *= 0.6; 
+    finalColor = finalColor / (finalColor + vec3(1.0));
     finalColor = pow(finalColor, vec3(1.0/2.2));
 
     FragColor = vec4(finalColor, 1.0);

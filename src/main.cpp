@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <vector>
+#include <cmath>
 //#include <string>
 #include "stb_image.h"
 #include "Shader.h"
@@ -124,9 +125,11 @@ int main() {
 
     glm::vec3 currentFirePos = glm::vec3(-0.262055f, -1.48022f, -0.674087f);
     glm::vec3 currentSteamPos = glm::vec3(-0.167861f, 0.266838f, -0.473491f);
-    
-    ParticleSystem fireSystem(150, currentFirePos, true); 
-    ParticleSystem steamSystem(100, currentSteamPos, false); 
+    glm::vec3 coffeeSpoutPos = glm::vec3(-0.167861f, 1.05f, -0.473491f);
+
+    ParticleSystem fireSystem(150, currentFirePos, 0); 
+    ParticleSystem steamSystem(50, currentSteamPos, 1); 
+    ParticleSystem coffeeSystem(5, coffeeSpoutPos, 2);
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -329,6 +332,31 @@ int main() {
        // =========================================================
         // [MODULI DA TESTARE: MENSOLE E TAZZINE]
         // =========================================================
+        // =========================================================
+        // Tubi metallici (Muro Destro)
+        // =========================================================
+        envShader.setVec3("albedo", glm::vec3(0.02f, 0.02f, 0.02f)); 
+        envShader.setFloat("metallic", 0.9f);
+        envShader.setFloat("roughness", 0.6f); 
+        
+        // TUBO DESTRA 1 (Più verso il fondo)
+        glm::mat4 pipeRight1 = glm::mat4(1.0f);
+        // X=3.8f (Vicino al muro). Y=1.5f (Centrato sulla mensola). Z=-3.2f (Verso il fondo)
+        pipeRight1 = glm::translate(pipeRight1, glm::vec3(3.8f, 1.5f, 0.2f)); 
+        // Scala Y per l'altezza del tubo
+        pipeRight1 = glm::scale(pipeRight1, glm::vec3(0.04f, 1.2f, 0.04f)); 
+        envShader.setMat4("model", pipeRight1);
+        glBindVertexArray(cylVAO);
+        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
+        // TUBO DESTRA 2 (Più verso la telecamera)
+        glm::mat4 pipeRight2 = glm::mat4(1.0f);
+        // Z=-1.8f (Più avanti rispetto al primo tubo)
+        pipeRight2 = glm::translate(pipeRight2, glm::vec3(3.8f, 1.5f, 1.8f)); 
+        pipeRight2 = glm::scale(pipeRight2, glm::vec3(0.04f, 1.2f, 0.04f)); 
+        envShader.setMat4("model", pipeRight2);
+        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
         // Tubi metallici (Sinistra)
         envShader.setVec3("albedo", glm::vec3(0.02f, 0.02f, 0.02f)); 
         envShader.setFloat("metallic", 0.9f);
@@ -472,11 +500,28 @@ int main() {
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
+       // =========================================================
+        // 3. RENDER PARTICELLE E LOGICA CICLICA
         // =========================================================
-        // 3. RENDER PARTICELLE
-        // =========================================================
-        fireSystem.Update(deltaTime);
-        steamSystem.Update(deltaTime);
+        
+        // --- IL TIMER DELLA MOKA ---
+        float cycleDuration = 10.0f; // Il ciclo dura 10 secondi in totale
+        float cycleTime = fmod(currentFrame, cycleDuration); 
+        
+        bool emitSteam = false;
+        bool emitCoffee = false;
+        
+        if (cycleTime < 4.0f) {
+            emitSteam = true; // Primi 4 sec: Vapore
+        } 
+        else if (cycleTime < 8.0f) {
+            emitCoffee = true; // Da 4s a 8s: Caffè
+        } 
+
+        // Passiamo i flag agli update
+        fireSystem.Update(deltaTime, true);
+        steamSystem.Update(deltaTime, emitSteam);
+        coffeeSystem.Update(deltaTime, emitCoffee);
 
         particleShader.use();
         particleShader.setMat4("view", view);
@@ -485,12 +530,12 @@ int main() {
         glDepthMask(GL_FALSE); 
         fireSystem.Draw(particleShader);
         steamSystem.Draw(particleShader);
+        coffeeSystem.Draw(particleShader);
         glDepthMask(GL_TRUE); 
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
     //audioManager.Shutdown();
     
     glfwTerminate();

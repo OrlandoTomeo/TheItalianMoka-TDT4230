@@ -85,16 +85,16 @@ void main() {
     float spec = pow(max(NdotH, 0.0), mix(2.0, 256.0, 1.0 - roughness));
     vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic);
 
-    // --- REFLECTIONS AMBIENTALI ---
+    // --- REFLECTIONS AMBIENTALI (KILLER DEI RIFLESSI) ---
     vec3 R = reflect(-V, N);
     vec3 envReflect = texture(skybox, R).rgb;
     float envIntensity = (1.0 - roughness) * metallic;
     vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * envIntensity;
 
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
-    vec3 topLightColor = vec3(0.75, 0.85, 0.95);
-    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.85; 
-    vec3 ambientDiff = (finalAlbedo * 0.07) + topLight; 
+    vec3 topLightColor = vec3(1.1, 1.15, 1.2); 
+    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 2.5; 
+    vec3 ambientDiff = (finalAlbedo * 0.4) + topLight; 
 
     vec3 finalColor = ambientDiff + ambientSpec + (diffuse + specular) * radiance;
     finalColor = finalColor / (finalColor + vec3(1.0));

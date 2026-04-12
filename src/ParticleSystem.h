@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <vector>
+
 #include <random>
 
 struct Particle {
@@ -15,8 +16,12 @@ struct Particle {
 
 class ParticleSystem {
 public:
-    ParticleSystem(int maxParticles, glm::vec3 spawnPos, bool isAdditive)
-        : maxParticles(maxParticles), spawnPos(spawnPos), isAdditive(isAdditive) {
+    // FIX: Sostituito bool isAdditive con int particleType
+    // 0 = Fuoco
+    // 1 = Vapore
+    // 2 = Caffè
+    ParticleSystem(int maxParticles, glm::vec3 spawnPos, int particleType)
+        : maxParticles(maxParticles), spawnPos(spawnPos), pType(particleType) {
         particles.resize(maxParticles);
         for(int i = 0; i < maxParticles; ++i) resetParticle(particles[i]);
         
@@ -25,7 +30,6 @@ public:
         
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // Reserve memory: 8 floats per particle (3 Pos, 4 Color, 1 Size)
         glBufferData(GL_ARRAY_BUFFER, maxParticles * 8 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
         
         glEnableVertexAttribArray(0); 
@@ -36,14 +40,11 @@ public:
         glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(7 * sizeof(float)));
     }
 
-    void Update(float dt) {
+    void Update(float dt, bool emitNew = true) {
         particleData.clear();
         
-        // Calcoliamo la direzione verso cui spinge il beccuccio.
-        // Essendo scentrato rispetto a (0,0,0), la sua posizione X e Z ci indica 
-        // esattamente la direzione "in avanti" per allontanarsi dalla moka!
         glm::vec3 outwardDir = glm::vec3(0.0f);
-        if(!isAdditive) { // Se è il vapore
+        if(pType == 1) { // Solo vapore
             outwardDir = glm::normalize(glm::vec3(spawnPos.x, 0.0f, spawnPos.z));
         }
 
@@ -51,46 +52,46 @@ public:
             p.Life -= dt;
             if(p.Life > 0.0f) {
                 
-                // --- INIZIO FAKE COLLISION COPERCHIO ---
-                if (!isAdditive) { // Solo per il vapore
-                    // Definiamo a che altezza si trova il coperchio rispetto alla nascita del vapore
-                    // (0.15f significa poco sopra il beccuccio. Modificalo se sbatte troppo presto o tardi)
+                // --- VAPORE: Fake collision col coperchio ---
+                if (pType == 1) { 
                     float lidHeight = spawnPos.y + 1.1f; 
-
                     float currentLidHeight = lidHeight + (p.Position.x * 0.2f) + (p.Position.z * 0.1f);
                     
                     if (p.Position.y > currentLidHeight) {
-                        // 1. Il vapore sbatte: smorziamo la sua velocità di salita (Y)
                         p.Velocity.y *= 0.75f; 
+                        p.Velocity.x = -0.9f; 
+                        p.Velocity.y =  0.45f; 
+                        p.Velocity.z = -0.3f; 
                         
-                        float slideX = -0.9f; // Spinta a sinistra/destra
-                        float slideY =  0.45f; // SPINTA VERSO L'ALTO (Fa scivolare lungo il coperchio!)
-                        float slideZ = -0.3f; // Spinta avanti/indietro
-                        
-                        p.Velocity.x = slideX;
-                        p.Velocity.y = slideY;
-                        p.Velocity.z = slideZ;
-                        
-                        // 3. Aggiungiamo un po' di turbolenza per farlo allargare ai lati (effetto nuvola)
                         p.Velocity.x += randomFloat(-0.5f, 0.5f);
                         p.Velocity.y += randomFloat(-0.1f, 0.1f);
                         p.Velocity.z += randomFloat(-0.5f, 0.5f);
                     }
                 }
-                // --- FINE FAKE COLLISION ---
+                
+                // --- CAFFÈ: Fermarlo quando tocca la moka ---
+                if (pType == 2) {
+                    // Il caffè cade (Y diminuisce).
+                    // Supponiamo che il "fondo" della moka sia a Y = -0.5f (modifica questo valore se sbava sotto)
+                    if (p.Position.y < -0.5f) { 
+                        p.Life = -1.0f; // Uccidiamo la particella appena tocca il fondo
+                    }
+                }
 
                 // Applica la velocità alla posizione
                 p.Position += p.Velocity * dt;
                 
-                // Fai svanire dolcemente la particella nel tempo
+                // Dissolvenza alfa in base alla vita
                 p.Color.a = (p.Life / 1.0f); 
                 
-                // Salva i dati per la scheda video
+                // Salva i dati
                 particleData.push_back(p.Position.x); particleData.push_back(p.Position.y); particleData.push_back(p.Position.z);
                 particleData.push_back(p.Color.r); particleData.push_back(p.Color.g); particleData.push_back(p.Color.b); particleData.push_back(p.Color.a);
                 particleData.push_back(p.Size);
             } else {
-                resetParticle(p);
+                if (emitNew) {
+                    resetParticle(p);
+                }
             }
         }
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -101,8 +102,8 @@ public:
         glEnable(GL_PROGRAM_POINT_SIZE);
         glEnable(GL_BLEND);
         
-        // Additive blending for fire (glow), standard alpha blending for steam
-        if(isAdditive) glBlendFunc(GL_SRC_ALPHA, GL_ONE); 
+        // Se è fuoco (0) fa "Glow", altrimenti fa standard blending (vapore o caffè)
+        if(pType == 0) glBlendFunc(GL_SRC_ALPHA, GL_ONE); 
         else glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
         
         glBindVertexArray(VAO);
@@ -110,7 +111,6 @@ public:
         glDisable(GL_BLEND);
     }
 
-    // Utility function to update spawn position dynamically
     void setSpawnPosition(glm::vec3 newPos) {
         spawnPos = newPos;
     }
@@ -120,7 +120,7 @@ private:
     std::vector<float> particleData;
     int maxParticles;
     glm::vec3 spawnPos;
-    bool isAdditive;
+    int pType; // 0=Fuoco, 1=Vapore, 2=Caffè
     unsigned int VAO, VBO;
 
     float randomFloat(float min, float max) {
@@ -128,27 +128,41 @@ private:
     }
 
     void resetParticle(Particle& p) {
-        if(isAdditive) { 
-            // FIRE CONFIGURATION (Ring Burner)
+        if(pType == 0) { 
+            // 0. FIRE CONFIGURATION
             float angle = randomFloat(0.0f, 3.14159f * 2.0f); 
-            float ringRadius = 0.65f; // Radius of the gas burner ring
+            float ringRadius = 0.65f; 
             
             p.Position = spawnPos + glm::vec3(cos(angle) * ringRadius, randomFloat(-0.02f, 0.02f), sin(angle) * ringRadius);
-            p.Velocity = glm::vec3(0.0f, randomFloat(0.4f, 0.8f), 0.0f); // Move straight up
-            
-            // Warm orange/yellow colors
+            p.Velocity = glm::vec3(0.0f, randomFloat(0.4f, 0.8f), 0.0f); 
             p.Color = glm::vec4(1.0f, randomFloat(0.3f, 0.7f), 0.1f, 1.0f);
             p.Size = randomFloat(0.15f, 0.35f);
-            p.Life = randomFloat(0.4f, 0.8f); // Short life for flickering flames
-        } else { 
-            // STEAM CONFIGURATION (Single Point Spout)
+            p.Life = randomFloat(0.4f, 0.8f); 
+            
+        } else if (pType == 1) { 
+            // 1. STEAM CONFIGURATION
             p.Position = spawnPos + glm::vec3(randomFloat(-0.05f, 0.05f), 0.0f, randomFloat(-0.05f, 0.05f));
             p.Velocity = glm::vec3(randomFloat(-0.1f, 0.1f), randomFloat(0.8f, 1.5f), randomFloat(-0.1f, 0.1f));
-            
-            // Soft transparent white/grey
             p.Color = glm::vec4(0.9f, 0.9f, 0.9f, 0.3f); 
             p.Size = randomFloat(0.3f, 0.8f);
             p.Life = randomFloat(1.5f, 3.0f);
+            
+        } else if (pType == 2) {
+            // 2. COFFEE CONFIGURATION (NUOVO!)
+            // Il caffè nasce dal beccuccio (concentrato) e va VERSO IL BASSO (Y negativa)
+            p.Position = spawnPos + glm::vec3(randomFloat(-0.02f, 0.02f), 0.0f, randomFloat(-0.02f, 0.02f));
+            
+            // Va lentamente in giù sull'asse Y. Leggera spinta a sinistra (su X) per scivolare sulla moka
+            p.Velocity = glm::vec3(randomFloat(-0.01f, -0.05f), randomFloat(-0.4f, -0.2f), randomFloat(-0.02f, 0.02f));
+            
+            // Colore marrone scurissimo (caffè)
+            p.Color = glm::vec4(0.15f, 0.05f, 0.0f, 1.0f); 
+            
+            // Dimensioni piccole! (È una goccia, non una nuvola di fumo)
+            p.Size = randomFloat(0.08f, 0.12f);
+            
+            // Vita breve (muore in fretta)
+            p.Life = randomFloat(1.0f, 1.5f);
         }
     }
 };

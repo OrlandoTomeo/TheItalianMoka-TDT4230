@@ -129,7 +129,7 @@ int main() {
 
     ParticleSystem fireSystem(150, currentFirePos, 0); 
     ParticleSystem steamSystem(50, currentSteamPos, 1); 
-    ParticleSystem coffeeSystem(5, coffeeSpoutPos, 2);
+    ParticleSystem coffeeSystem(15, coffeeSpoutPos, 2);
     // === SHADOW MAPPING SETUP ===
     const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
     unsigned int depthMapFBO;

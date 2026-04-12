@@ -159,7 +159,7 @@ private:
             p.Color = glm::vec4(0.15f, 0.05f, 0.0f, 1.0f); 
             
             // Dimensioni piccole! (È una goccia, non una nuvola di fumo)
-            p.Size = randomFloat(0.08f, 0.12f);
+            p.Size = randomFloat(0.15f, 0.20f);
             
             // Vita breve (muore in fretta)
             p.Life = randomFloat(1.0f, 1.5f);

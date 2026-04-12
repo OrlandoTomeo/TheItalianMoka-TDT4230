@@ -12,7 +12,6 @@
 
 Rather than relying on high-poly external models, this assignment emphasizes **procedural geometry**, custom **PBR (Physically Based Rendering)** shaders, and dynamic physics systems.
 
-![Final Scene Render](Images/imgcompleta.png)
 
 ## Technical Implementation
 

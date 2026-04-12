@@ -334,4 +334,12 @@ CMakeFiles/MokaProject.dir/src/main.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\opt_random.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\random.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\numeric \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_numeric.h
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_numeric.h \
+ C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\audioManager.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\unordered_map \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ext\aligned_buffer.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\hashtable.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\hashtable_policy.h \
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unordered_map.h \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/AL/alc.h \
+ C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/include/AL/al.h

@@ -1,6 +1,7 @@
 #include "audioManager.h"
 #define DR_WAV_IMPLEMENTATION
 #include "utils/dr_wav.h"
+#include <iostream>
 
 namespace SpaceEngine
 {
@@ -8,11 +9,13 @@ namespace SpaceEngine
     {
         m_device = alcOpenDevice(nullptr);
         if (!m_device) {
+            std::cerr << "Errore: Impossibile aprire il device audio!" << std::endl;
             return;
         }
 
         m_context = alcCreateContext(m_device, nullptr);
         if (!m_context || !alcMakeContextCurrent(m_context)) {
+            std::cerr << "Errore: Impossibile creare il contesto OpenAL!" << std::endl;
             return;
         }
 
@@ -25,6 +28,7 @@ namespace SpaceEngine
         alDeleteSources(1, &m_musicSource);
 
         for (ALuint source : m_sources) {
+            alSourceStop(source);
             alDeleteSources(1, &source);
         }
         m_sources.clear();
@@ -37,7 +41,6 @@ namespace SpaceEngine
         alcMakeContextCurrent(nullptr);
         if (m_context) alcDestroyContext(m_context);
         if (m_device) alcCloseDevice(m_device);
-
     }
 
     void AudioManager::LoadSound(const std::string& name, const std::string& filePath)
@@ -46,10 +49,10 @@ namespace SpaceEngine
             return;
         }
 
-        // Caricamento WAV con dr_wav
         unsigned int channels;
         unsigned int sampleRate;
         drwav_uint64 totalPCMFrameCount;
+        
         short* pSampleData = drwav_open_file_and_read_pcm_frames_s16(
             filePath.c_str(), 
             &channels, 
@@ -59,15 +62,11 @@ namespace SpaceEngine
         );
 
         if (pSampleData == nullptr) {
+            std::cerr << "Errore: Impossibile caricare il file audio: " << filePath << std::endl;
             return;
         }
 
-        /*SPACE_ENGINE_INFO("File: {}", filePath);
-        SPACE_ENGINE_INFO(" > Channels: {}", channels);         
-        SPACE_ENGINE_INFO(" > SampleRate: {}", sampleRate);
-        SPACE_ENGINE_INFO(" > Frames: {}", totalPCMFrameCount);per verificare che i file audio non siano vuoti o corrotti*/
-
-        ALenum format; //se audio mono o stereo
+        ALenum format;
         if (channels == 1) format = AL_FORMAT_MONO16;
         else if (channels == 2) format = AL_FORMAT_STEREO16;
         else {
@@ -102,19 +101,32 @@ namespace SpaceEngine
 
     void AudioManager::PlaySound(const std::string& name)
     {
-        if (m_soundBuffers.find(name) == m_soundBuffers.end()) {
-            return;
-        }
+        if (m_soundBuffers.find(name) == m_soundBuffers.end()) return;
 
         ALuint buffer = m_soundBuffers[name];
         ALuint source = GetAvailableSource();
 
         alSourcei(source, AL_BUFFER, buffer);
         alSourcei(source, AL_LOOPING, AL_FALSE); 
-        alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE); //TODO: da cambiare se vogliamo suoni 3D(proiettili direzzionali, ecc)
-
-        alSourcef(source, AL_GAIN, 1.0f);
+        alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
+        alSourcef(source, AL_GAIN, 1.0f); 
         alSourcePlay(source);
+    }
+
+    ALuint AudioManager::PlaySoundLoop(const std::string& name, float volume)
+    {
+        if (m_soundBuffers.find(name) == m_soundBuffers.end()) return 0;
+
+        ALuint buffer = m_soundBuffers[name];
+        ALuint source = GetAvailableSource();
+
+        alSourcei(source, AL_BUFFER, buffer);
+        alSourcei(source, AL_LOOPING, AL_TRUE);
+        alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
+        alSourcef(source, AL_GAIN, volume);
+        alSourcePlay(source);
+
+        return source;
     }
 
     void AudioManager::PlayMusic(const std::string& name, bool loop)
@@ -126,12 +138,9 @@ namespace SpaceEngine
         ALuint buffer = m_soundBuffers[name];
         alSourcei(m_musicSource, AL_BUFFER, buffer);
         alSourcei(m_musicSource, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
-        alSourcei(m_musicSource, AL_SOURCE_RELATIVE, AL_TRUE); //TODO: da cambiare se vogliamo musica 3D(probabilmente no)
-        alSourcef(m_musicSource, AL_GAIN, 1.f); // Volume musica al 50% di default
+        alSourcei(m_musicSource, AL_SOURCE_RELATIVE, AL_TRUE);
+        alSourcef(m_musicSource, AL_GAIN, m_musicVolume); // Usa il volume dedicato alla musica
         alSourcePlay(m_musicSource);
-
-        ALint state;
-        alGetSourcei(m_musicSource, AL_SOURCE_STATE, &state);
     }
 
     void AudioManager::StopMusic()
@@ -141,10 +150,15 @@ namespace SpaceEngine
 
     void AudioManager::SetVolume(float volume)
     {
-        if (volume < 0.0f) volume = 0.0f;
-        if (volume > 1.0f) volume = 1.0f;
-
-        m_masterVolume = volume;
-        alListenerf(AL_GAIN, volume);
+        m_masterVolume = (volume < 0.0f) ? 0.0f : (volume > 1.0f ? 1.0f : volume);
+        
+        alListenerf(AL_GAIN, m_masterVolume);
     }
-};
+
+    void AudioManager::SetMusicVolume(float volume)
+    {
+        m_musicVolume = (volume < 0.0f) ? 0.0f : (volume > 1.0f ? 1.0f : volume);
+        
+        alSourcef(m_musicSource, AL_GAIN, m_musicVolume);
+    }
+}

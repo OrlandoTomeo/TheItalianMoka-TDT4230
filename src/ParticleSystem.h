@@ -16,10 +16,7 @@ struct Particle {
 
 class ParticleSystem {
 public:
-    // FIX: Sostituito bool isAdditive con int particleType
-    // 0 = Fuoco
-    // 1 = Vapore
-    // 2 = Caffè
+    // Particle types: 0 = Fire, 1 = Steam, 2 = Coffee
     ParticleSystem(int maxParticles, glm::vec3 spawnPos, int particleType)
         : maxParticles(maxParticles), spawnPos(spawnPos), pType(particleType) {
         particles.resize(maxParticles);
@@ -44,7 +41,8 @@ public:
         particleData.clear();
         
         glm::vec3 outwardDir = glm::vec3(0.0f);
-        if(pType == 1) { // Solo vapore
+        if(pType == 1) { 
+            // Steam direction
             outwardDir = glm::normalize(glm::vec3(spawnPos.x, 0.0f, spawnPos.z));
         }
 
@@ -52,7 +50,7 @@ public:
             p.Life -= dt;
             if(p.Life > 0.0f) {
                 
-                // --- VAPORE: Fake collision col coperchio ---
+                // --- STEAM: Fake collision with Moka lid ---
                 if (pType == 1) { 
                     float lidHeight = spawnPos.y + 1.1f; 
                     float currentLidHeight = lidHeight + (p.Position.x * 0.2f) + (p.Position.z * 0.1f);
@@ -69,22 +67,21 @@ public:
                     }
                 }
                 
-                // --- CAFFÈ: Fermarlo quando tocca la moka ---
+                // --- COFFEE: Stop when touching the base ---
                 if (pType == 2) {
-                    // Il caffè cade (Y diminuisce).
-                    // Supponiamo che il "fondo" della moka sia a Y = -0.5f (modifica questo valore se sbava sotto)
+                    // Kill particle upon reaching the bottom of the pot
                     if (p.Position.y < -0.5f) { 
-                        p.Life = -1.0f; // Uccidiamo la particella appena tocca il fondo
+                        p.Life = -1.0f; 
                     }
                 }
 
-                // Applica la velocità alla posizione
+                // Apply velocity
                 p.Position += p.Velocity * dt;
                 
-                // Dissolvenza alfa in base alla vita
+                // Alpha fade based on life
                 p.Color.a = (p.Life / 1.0f); 
                 
-                // Salva i dati
+                // Store particle data
                 particleData.push_back(p.Position.x); particleData.push_back(p.Position.y); particleData.push_back(p.Position.z);
                 particleData.push_back(p.Color.r); particleData.push_back(p.Color.g); particleData.push_back(p.Color.b); particleData.push_back(p.Color.a);
                 particleData.push_back(p.Size);
@@ -102,7 +99,7 @@ public:
         glEnable(GL_PROGRAM_POINT_SIZE);
         glEnable(GL_BLEND);
         
-        // Se è fuoco (0) fa "Glow", altrimenti fa standard blending (vapore o caffè)
+        // Additive blending for fire, standard blending for steam/coffee
         if(pType == 0) glBlendFunc(GL_SRC_ALPHA, GL_ONE); 
         else glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
         
@@ -120,7 +117,7 @@ private:
     std::vector<float> particleData;
     int maxParticles;
     glm::vec3 spawnPos;
-    int pType; // 0=Fuoco, 1=Vapore, 2=Caffè
+    int pType;
     unsigned int VAO, VBO;
 
     float randomFloat(float min, float max) {
@@ -148,20 +145,11 @@ private:
             p.Life = randomFloat(1.5f, 3.0f);
             
         } else if (pType == 2) {
-            // 2. COFFEE CONFIGURATION (NUOVO!)
-            // Il caffè nasce dal beccuccio (concentrato) e va VERSO IL BASSO (Y negativa)
+            // 2. COFFEE CONFIGURATION
             p.Position = spawnPos + glm::vec3(randomFloat(-0.02f, 0.02f), 0.0f, randomFloat(-0.02f, 0.02f));
-            
-            // Va lentamente in giù sull'asse Y. Leggera spinta a sinistra (su X) per scivolare sulla moka
             p.Velocity = glm::vec3(randomFloat(-0.01f, -0.05f), randomFloat(-0.4f, -0.2f), randomFloat(-0.02f, 0.02f));
-            
-            // Colore marrone scurissimo (caffè)
             p.Color = glm::vec4(0.15f, 0.05f, 0.0f, 1.0f); 
-            
-            // Dimensioni piccole! (È una goccia, non una nuvola di fumo)
             p.Size = randomFloat(0.15f, 0.20f);
-            
-            // Vita breve (muore in fretta)
             p.Life = randomFloat(1.0f, 1.5f);
         }
     }

@@ -86,11 +86,26 @@ CMakeFiles/MokaProject.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MokaProject.dir/src/main.cpp.s"
 	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\main.cpp -o CMakeFiles\MokaProject.dir\src\main.cpp.s
 
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj: CMakeFiles/MokaProject.dir/flags.make
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj: CMakeFiles/MokaProject.dir/includes_CXX.rsp
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj: C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/audioManager.cpp
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj: CMakeFiles/MokaProject.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj -MF CMakeFiles\MokaProject.dir\src\audioManager.cpp.obj.d -o CMakeFiles\MokaProject.dir\src\audioManager.cpp.obj -c C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\audioManager.cpp
+
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MokaProject.dir/src/audioManager.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\audioManager.cpp > CMakeFiles\MokaProject.dir\src\audioManager.cpp.i
+
+CMakeFiles/MokaProject.dir/src/audioManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MokaProject.dir/src/audioManager.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\audioManager.cpp -o CMakeFiles\MokaProject.dir\src\audioManager.cpp.s
+
 CMakeFiles/MokaProject.dir/src/glad.c.obj: CMakeFiles/MokaProject.dir/flags.make
 CMakeFiles/MokaProject.dir/src/glad.c.obj: CMakeFiles/MokaProject.dir/includes_C.rsp
 CMakeFiles/MokaProject.dir/src/glad.c.obj: C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/glad.c
 CMakeFiles/MokaProject.dir/src/glad.c.obj: CMakeFiles/MokaProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MokaProject.dir/src/glad.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/MokaProject.dir/src/glad.c.obj"
 	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/MokaProject.dir/src/glad.c.obj -MF CMakeFiles\MokaProject.dir\src\glad.c.obj.d -o CMakeFiles\MokaProject.dir\src\glad.c.obj -c C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\glad.c
 
 CMakeFiles/MokaProject.dir/src/glad.c.i: cmake_force
@@ -105,7 +120,7 @@ CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj: CMakeFiles/MokaProject.dir/fla
 CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj: CMakeFiles/MokaProject.dir/includes_CXX.rsp
 CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj: C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/src/stb_image.cpp
 CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj: CMakeFiles/MokaProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj"
 	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj -MF CMakeFiles\MokaProject.dir\src\stb_image.cpp.obj.d -o CMakeFiles\MokaProject.dir\src\stb_image.cpp.obj -c C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\src\stb_image.cpp
 
 CMakeFiles/MokaProject.dir/src/stb_image.cpp.i: cmake_force
@@ -119,6 +134,7 @@ CMakeFiles/MokaProject.dir/src/stb_image.cpp.s: cmake_force
 # Object files for target MokaProject
 MokaProject_OBJECTS = \
 "CMakeFiles/MokaProject.dir/src/main.cpp.obj" \
+"CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj" \
 "CMakeFiles/MokaProject.dir/src/glad.c.obj" \
 "CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj"
 
@@ -126,17 +142,19 @@ MokaProject_OBJECTS = \
 MokaProject_EXTERNAL_OBJECTS =
 
 MokaProject.exe: CMakeFiles/MokaProject.dir/src/main.cpp.obj
+MokaProject.exe: CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj
 MokaProject.exe: CMakeFiles/MokaProject.dir/src/glad.c.obj
 MokaProject.exe: CMakeFiles/MokaProject.dir/src/stb_image.cpp.obj
 MokaProject.exe: CMakeFiles/MokaProject.dir/build.make
 MokaProject.exe: _deps/glfw-build/src/libglfw3.a
 MokaProject.exe: _deps/assimp-build/code/libassimp.a
+MokaProject.exe: C:/Users/orlan/Desktop/TheItalianMoka-TDT4230/external/lib/libOpenAL32.a
 MokaProject.exe: _deps/assimp-build/contrib/zlib/libzlibstatic.a
 MokaProject.exe: _deps/assimp-build/contrib/irrXML/libIrrXML.a
 MokaProject.exe: CMakeFiles/MokaProject.dir/linkLibs.rsp
 MokaProject.exe: CMakeFiles/MokaProject.dir/objects1.rsp
 MokaProject.exe: CMakeFiles/MokaProject.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable MokaProject.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\orlan\Desktop\TheItalianMoka-TDT4230\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable MokaProject.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\MokaProject.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

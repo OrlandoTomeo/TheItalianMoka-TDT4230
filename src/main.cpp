@@ -5,12 +5,11 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-//#include <string>
 #include "stb_image.h"
 #include "Shader.h"
 #include "Model.h"
 #include "ParticleSystem.h"
-//#include "audioManager.h"
+#include "audioManager.h"
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -93,11 +92,20 @@ int main() {
     Shader envShader("shaders/env.vert", "shaders/env.frag");
     Model mokaBialetti("models/bialetti_moka_espresso_maker_1933.glb");
 
-    /*
-    //audiomanager
+    // INITIALIZE AUDIO MANAGER
     SpaceEngine::AudioManager audioManager;
-    ...
-    */
+    audioManager.Initialize();
+
+    audioManager.LoadSound("tarantella", "audio/tarantella.wav");
+    audioManager.LoadSound("moka_boiling", "audio/moka_boiling.wav");
+
+    audioManager.SetMusicVolume(0.06f);
+    audioManager.PlayMusic("tarantella", true);
+
+    audioManager.PlaySoundLoop("moka_boiling", 0.5f);
+    
+    audioManager.SetVolume(1.0f);
+
     std::vector<std::string> faces = { "textures/right.jpg", "textures/left.jpg", "textures/top.jpg", "textures/bottom.jpg", "textures/front.jpg", "textures/back.jpg" };
     unsigned int cubemapTexture = loadCubemap(faces);
 
@@ -130,6 +138,7 @@ int main() {
     ParticleSystem fireSystem(150, currentFirePos, 0); 
     ParticleSystem steamSystem(50, currentSteamPos, 1); 
     ParticleSystem coffeeSystem(15, coffeeSpoutPos, 2);
+    
     // === SHADOW MAPPING SETUP ===
     const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
     unsigned int depthMapFBO;
@@ -141,7 +150,8 @@ int main() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // Evita che le ombre si ripetano fuori dai bordi
+    
+    // Prevent shadows from repeating outside the map bounds
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -166,14 +176,14 @@ int main() {
             glfwSetWindowShouldClose(window, true);
 
         // =========================================================
-        // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DALLA LUCE)
+        // PASS 1: RENDER SHADOW MAP (FROM LIGHT'S POV)
         // =========================================================
         glm::vec3 lightPos = glm::vec3(-8.0f, 8.0f, 4.0f); 
         
-        // Allarghiamo la telecamera da 10 a 15 per catturare le ombre lunghe
+        // Expand the orthographic projection to capture elongated shadows
         glm::mat4 lightProjection = glm::ortho(-15.0f, 15.0f, -15.0f, 15.0f, 1.0f, 30.0f);
         
-        // Siccome la luce non guarda più "a piombo", rimettiamo l'Up Vector standard (0,1,0)
+        // Standard Up Vector since the light is angled
         glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
@@ -184,7 +194,7 @@ int main() {
         shadowShader.use();
         shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-        // --- DISEGNIAMO LA MOKA NELL'OMBRA ---
+        // --- RENDER MOKA IN SHADOW MAP ---
         glm::mat4 mokaShadowModel = glm::mat4(1.0f);
         mokaShadowModel = glm::translate(mokaShadowModel, glm::vec3(0.0f, -0.8f, 0.0f));
         mokaShadowModel = glm::rotate(mokaShadowModel, glm::radians(19.4863f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -193,36 +203,34 @@ int main() {
         shadowShader.setMat4("model", mokaShadowModel);
         mokaBialetti.Draw(shadowShader);
 
-        // --- DISEGNIAMO MENSOLE E TAZZINE NELL'OMBRA ---
-        glBindVertexArray(cylVAO); // Tutto il resto usa i cilindri
+        // --- RENDER SHELVES AND CUPS IN SHADOW MAP ---
+        glBindVertexArray(cylVAO);
         
-        // Mensole
+        // Left Shelves
         glm::mat4 sh1 = glm::mat4(1.0f); sh1 = glm::translate(sh1, glm::vec3(-0.6f, 1.6f, -3.8f)); sh1 = glm::scale(sh1, glm::vec3(2.5f, 1.12f, 0.6f)); 
         shadowShader.setMat4("model", sh1); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         
         glm::mat4 sh2 = glm::mat4(1.0f); sh2 = glm::translate(sh2, glm::vec3(-0.6f, 0.9f, -3.8f)); sh2 = glm::scale(sh2, glm::vec3(2.5f, 1.12f, 0.6f)); 
         shadowShader.setMat4("model", sh2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // MENSOLA DESTRA FIXATA: X a 4.3f
-        glm::mat4 shR = glm::mat4(1.0f); shR = glm::translate(shR, glm::vec3(4.3f, 1.2f, 1.0f)); shR = glm::scale(shR, glm::vec3(1.0f, 1.12f, 2.5f)); 
+        // Right Shelf
+        glm::mat4 shR = glm::mat4(1.0f); shR = glm::translate(shR, glm::vec3(4.6f, 1.2f, 1.0f)); shR = glm::scale(shR, glm::vec3(1.0f, 1.12f, 2.5f)); 
         shadowShader.setMat4("model", shR); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // Tazzine (Ne bastano le forme base per fare un'ottima ombra)
+        // Cups (Base forms are sufficient for shadow casting)
         glm::mat4 c1 = glm::mat4(1.0f); c1 = glm::translate(c1, glm::vec3(-0.2f, 1.05f, -3.75f)); c1 = glm::scale(c1, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c1); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         glm::mat4 c2 = glm::mat4(1.0f); c2 = glm::translate(c2, glm::vec3(0.4f, 1.05f, -3.75f)); c2 = glm::scale(c2, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         glm::mat4 c3 = glm::mat4(1.0f); c3 = glm::translate(c3, glm::vec3(-1.5f, 1.75f, -3.75f)); c3 = glm::scale(c3, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c3); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
         
-        // TAZZINE DESTRA FIXATE: X a 4.3f
-        glm::mat4 c4 = glm::mat4(1.0f); c4 = glm::translate(c4, glm::vec3(4.3f, 1.35f, 0.4f)); c4 = glm::scale(c4, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c4); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
-        glm::mat4 c5 = glm::mat4(1.0f); c5 = glm::translate(c5, glm::vec3(4.3f, 1.35f, 1.0f)); c5 = glm::scale(c5, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c5); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c4 = glm::mat4(1.0f); c4 = glm::translate(c4, glm::vec3(4.6f, 1.35f, 0.4f)); c4 = glm::scale(c4, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c4); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c5 = glm::mat4(1.0f); c5 = glm::translate(c5, glm::vec3(4.6f, 1.35f, 1.0f)); c5 = glm::scale(c5, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c5); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // =========================================================
-        // PASS 2: RENDER NORMALE DELLA SCENA
+        // PASS 2: NORMAL SCENE RENDERING
         // =========================================================
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-        // Da qui in poi è esattamente il tuo codice di prima
         glClearColor(0.40f, 0.43f, 0.47f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -261,7 +269,7 @@ int main() {
         mokaBialetti.Draw(mokaShader);
 
         // =========================================================
-        // 2. RENDER AMBIENTE
+        // 2. RENDER ENVIRONMENT
         // =========================================================
         envShader.use();
         envShader.setVec3("cameraPos", cameraPos);
@@ -280,13 +288,13 @@ int main() {
         glBindTexture(GL_TEXTURE_2D, depthMap);                  
         envShader.setInt("shadowMap", 1);
 
-        // ---- 2A. MATERIALE GHISA ----
+        // ---- 2A. CAST IRON MATERIAL ----
         envShader.setVec3("albedo", glm::vec3(0.01f, 0.01f, 0.01f)); 
         envShader.setFloat("metallic", 0.9f);  
         envShader.setFloat("roughness", 0.85f); 
         envShader.setInt("isCastIron", 1);
         
-        // --- FORNELLO 1 (PRINCIPALE, ACCESO) ---
+        // --- MAIN BURNER (ACTIVE) ---
         glm::mat4 cylModel = glm::mat4(1.0f);
         cylModel = glm::translate(cylModel, glm::vec3(currentFirePos.x, -1.54f, currentFirePos.z));
         cylModel = glm::scale(cylModel, glm::vec3(1.1f, 1.6f, 1.1f)); 
@@ -314,9 +322,7 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         // =========================================================
-        // [MODULI DA TESTARE: FORNELLI EXTRA]
-        // Modifica stepX per allontanarli a destra/sinistra.
-        // Modifica stepZ per allontanarli in avanti/indietro.
+        // --- EXTRA BURNERS ---
         // =========================================================
         float stepX = 3.0f; 
         float stepZ = 3.0f; 
@@ -358,14 +364,14 @@ int main() {
         }
 
         // =========================================================
-        // [MODULI DA TESTARE: PAVIMENTO E CORNICIONE]
+        // --- COUNTERTOP AND BORDER ---
         // =========================================================
-        envShader.setVec3("albedo", glm::vec3(0.11f, 0.08f, 0.06f)); 
-        envShader.setFloat("metallic", 0.0f); 
-        envShader.setFloat("roughness", 1.0f); 
+        envShader.setVec3("albedo", glm::vec3(0.15f, 0.10f, 0.08f)); 
+        envShader.setFloat("metallic", 0.05f);
+        envShader.setFloat("roughness", 0.35f);
         envShader.setInt("isCastIron", 0);
         
-        // --- PAVIMENTO ---
+        // --- COUNTERTOP ---
         glm::mat4 floorModel = glm::mat4(1.0f);
         floorModel = glm::translate(floorModel, glm::vec3(7.5f, -1.55f, 0.0f));
         floorModel = glm::scale(floorModel, glm::vec3(0.5f, 1.0f, 0.5f)); 
@@ -373,26 +379,25 @@ int main() {
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        // --- CORNICIONE ---
+        // --- BORDER ---
         envShader.setVec3("albedo", glm::vec3(0.07f, 0.05f, 0.04f)); 
         envShader.setFloat("roughness", 0.85f);
         
         glm::mat4 edgeModel = glm::mat4(1.0f);
         edgeModel = glm::translate(edgeModel, glm::vec3(-2.5f, -1.55f, 0.0f)); 
         edgeModel = glm::rotate(edgeModel, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        // LUNGHEZZA CORNICIONE: Nello scale qui sotto, il numero "80.0f" è la lunghezza lungo l'asse Z. 
-        // L'ho aumentato tantissimo per coprire tutto, se sborda troppo dietro abbassalo a 50.0f o simili.
+        // Scale Z to cover the entire width of the counter
         edgeModel = glm::scale(edgeModel, glm::vec3(0.08f, 160.0f, 0.08f)); 
         envShader.setMat4("model", edgeModel);
         glBindVertexArray(cylVAO);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         // =========================================================
-        // 2C. MURI DELLA CUCINA 
+        // --- KITCHEN WALLS ---
         // =========================================================
         envShader.setVec3("albedo", glm::vec3(0.87f, 0.84f, 0.77f)); 
         
-        // MURO POSTERIORE (Tutto opaco)
+        // BACK WALL (Fully matte)
         envShader.setFloat("metallic", 0.0f);  
         envShader.setFloat("roughness", 1.0f); 
         envShader.setInt("isCastIron", 0); 
@@ -404,9 +409,8 @@ int main() {
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        // MURO DESTRA (Con FIX Riflesso minimo)
-        // Ho impostato il metallo bassissimo (0.02) e roughness (0.85) in modo che 
-        // catturi appena appena una lieve traccia della stanza, senza abbagliare.
+        // RIGHT WALL
+        // Very low metalness and high roughness to catch slight ambient light
         envShader.setFloat("metallic", 0.0f);  
         envShader.setFloat("roughness", 1.0f); 
         
@@ -417,39 +421,32 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
        // =========================================================
-        // [MODULI DA TESTARE: MENSOLE E TAZZINE]
-        // =========================================================
-        // =========================================================
-        // Tubi metallici (Muro Destro)
-        // =========================================================
+       // --- METAL BRACKETS & SHELVES ---
+       // =========================================================
         envShader.setVec3("albedo", glm::vec3(0.02f, 0.02f, 0.02f)); 
         envShader.setFloat("metallic", 0.9f);
         envShader.setFloat("roughness", 0.6f); 
         
-        // TUBO DESTRA 1 (Più verso il fondo)
+        // RIGHT BRACKET 1
         glm::mat4 pipeRight1 = glm::mat4(1.0f);
-        // TUBI DESTRA FIXATI: X a 4.3f
-        pipeRight1 = glm::translate(pipeRight1, glm::vec3(4.3f, 1.5f, 0.2f)); 
-        // Scala Y per l'altezza del tubo
+        pipeRight1 = glm::translate(pipeRight1, glm::vec3(4.6f, 1.5f, 0.2f)); 
         pipeRight1 = glm::scale(pipeRight1, glm::vec3(0.04f, 1.2f, 0.04f)); 
         envShader.setMat4("model", pipeRight1);
         glBindVertexArray(cylVAO);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // TUBO DESTRA 2 (Più verso la telecamera)
+        // RIGHT BRACKET 2
         glm::mat4 pipeRight2 = glm::mat4(1.0f);
-        // TUBI DESTRA FIXATI: X a 4.3f
-        pipeRight2 = glm::translate(pipeRight2, glm::vec3(4.3f, 1.5f, 1.8f)); 
+        pipeRight2 = glm::translate(pipeRight2, glm::vec3(4.6f, 1.5f, 1.8f)); 
         pipeRight2 = glm::scale(pipeRight2, glm::vec3(0.04f, 1.2f, 0.04f)); 
         envShader.setMat4("model", pipeRight2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // Tubi metallici (Sinistra)
+        // LEFT BRACKETS (Embedded into the wall to prevent floating shadows)
         envShader.setVec3("albedo", glm::vec3(0.02f, 0.02f, 0.02f)); 
         envShader.setFloat("metallic", 0.9f);
         envShader.setFloat("roughness", 0.6f); 
         
-        // TUBI SINISTRA FIXATI: Sprofondati nel muro a Z = -3.95f
         glm::mat4 pipe1 = glm::mat4(1.0f);
         pipe1 = glm::translate(pipe1, glm::vec3(-1.6f, 1.3f, -3.95f)); 
         pipe1 = glm::scale(pipe1, glm::vec3(0.04f, 1.8f, 0.04f)); 
@@ -463,60 +460,56 @@ int main() {
         envShader.setMat4("model", pipe2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- PIANI IN LEGNO ---
+        // --- WOODEN SHELVES ---
         envShader.setVec3("albedo", glm::vec3(0.35f, 0.22f, 0.12f)); 
         envShader.setFloat("metallic", 0.0f);
         envShader.setFloat("roughness", 0.85f); 
         
-        // MENSOLA SINISTRA ALTA
+        // TOP LEFT SHELF
         glm::mat4 shelf1 = glm::mat4(1.0f);
         shelf1 = glm::translate(shelf1, glm::vec3(-0.6f, 1.6f, -3.8f)); 
         shelf1 = glm::scale(shelf1, glm::vec3(2.5f, 1.12f, 0.6f)); 
         envShader.setMat4("model", shelf1);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // MENSOLA SINISTRA BASSA
+        // BOTTOM LEFT SHELF
         glm::mat4 shelf2 = glm::mat4(1.0f);
         shelf2 = glm::translate(shelf2, glm::vec3(-0.6f, 0.9f, -3.8f)); 
         shelf2 = glm::scale(shelf2, glm::vec3(2.5f, 1.12f, 0.6f)); 
         envShader.setMat4("model", shelf2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // MENSOLA DESTRA FIXATA: X a 4.3f
+        // RIGHT SHELF
         glm::mat4 shelfRight = glm::mat4(1.0f);
-        shelfRight = glm::translate(shelfRight, glm::vec3(4.3f, 1.2f, 1.0f)); 
+        shelfRight = glm::translate(shelfRight, glm::vec3(4.6f, 1.2f, 1.0f)); 
         shelfRight = glm::scale(shelfRight, glm::vec3(1.0f, 1.12f, 2.5f)); 
         envShader.setMat4("model", shelfRight);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         // =========================================================
-        // TAZZINE (Più grandi, scala +30% circa per proporzione con Moka)
+        // --- ESPRESSO CUPS ---
         // =========================================================
         envShader.setVec3("albedo", glm::vec3(0.9f, 0.9f, 0.85f)); 
         envShader.setFloat("metallic", 0.05f); 
         envShader.setFloat("roughness", 0.2f); 
         
-        // --- 1. TAZZINA IN ALTO A SINISTRA ---
+        // 1. TOP LEFT CUP
         glm::mat4 cup3 = glm::mat4(1.0f);
-        // Y alzata a 1.75f per compensare la dimensione maggiore
         cup3 = glm::translate(cup3, glm::vec3(-1.5f, 1.75f, -3.75f)); 
-        // SCALA AUMENTATA: X/Z passano da 0.15f a 0.20f. Y passa da 5.0f a 6.5f
         cup3 = glm::scale(cup3, glm::vec3(0.20f, 6.5f, 0.20f));      
         envShader.setMat4("model", cup3);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 handle3 = glm::mat4(1.0f);
-        // Manico spostato leggermente più in fuori (X) e più in alto (Y)
         handle3 = glm::translate(handle3, glm::vec3(-1.34f, 1.82f, -3.75f)); 
         handle3 = glm::rotate(handle3, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        // Manico ispessito proporzionalmente
         handle3 = glm::scale(handle3, glm::vec3(0.08f, 1.8f, 0.08f)); 
         envShader.setMat4("model", handle3);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 2. TAZZINA BASSA A SINISTRA (Freccia rossa) ---
+        // 2. BOTTOM LEFT CUP 1
         glm::mat4 cup1 = glm::mat4(1.0f);
-        cup1 = glm::translate(cup1, glm::vec3(-0.2f, 1.05f, -3.75f)); // Y alzata a 1.05f
+        cup1 = glm::translate(cup1, glm::vec3(-0.2f, 1.05f, -3.75f)); 
         cup1 = glm::scale(cup1, glm::vec3(0.20f, 6.5f, 0.20f)); 
         envShader.setMat4("model", cup1);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
@@ -528,7 +521,7 @@ int main() {
         envShader.setMat4("model", handle1);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 3. TAZZINA BASSA CENTRALE ---
+        // 3. BOTTOM LEFT CUP 2
         glm::mat4 cup2 = glm::mat4(1.0f);
         cup2 = glm::translate(cup2, glm::vec3(0.4f, 1.05f, -3.75f)); 
         cup2 = glm::scale(cup2, glm::vec3(0.20f, 6.5f, 0.20f)); 
@@ -542,71 +535,70 @@ int main() {
         envShader.setMat4("model", handle2);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 4. TAZZINA DESTRA 1 (Sulla mensola FIXATA: X a 4.3f) ---
+        // 4. RIGHT CUP 1
         glm::mat4 cup4 = glm::mat4(1.0f);
-        cup4 = glm::translate(cup4, glm::vec3(4.3f, 1.35f, 0.4f)); 
+        cup4 = glm::translate(cup4, glm::vec3(4.6f, 1.35f, 0.4f)); 
         cup4 = glm::scale(cup4, glm::vec3(0.20f, 6.5f, 0.20f)); 
         envShader.setMat4("model", cup4);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 handle4 = glm::mat4(1.0f);
-        handle4 = glm::translate(handle4, glm::vec3(4.3f, 1.42f, 0.24f)); 
+        handle4 = glm::translate(handle4, glm::vec3(4.6f, 1.42f, 0.24f)); 
         handle4 = glm::rotate(handle4, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)); 
         handle4 = glm::scale(handle4, glm::vec3(0.08f, 1.8f, 0.08f)); 
         envShader.setMat4("model", handle4);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
-        // --- 5. TAZZINA DESTRA 2 (FIXATA: X a 4.3f) ---
+        // 5. RIGHT CUP 2
         glm::mat4 cup5 = glm::mat4(1.0f);
-        cup5 = glm::translate(cup5, glm::vec3(4.3f, 1.35f, 1.0f)); 
+        cup5 = glm::translate(cup5, glm::vec3(4.6f, 1.35f, 1.0f)); 
         cup5 = glm::scale(cup5, glm::vec3(0.20f, 6.5f, 0.20f)); 
         envShader.setMat4("model", cup5);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         glm::mat4 handle5 = glm::mat4(1.0f);
-        handle5 = glm::translate(handle5, glm::vec3(4.3f, 1.42f, 0.84f));
+        handle5 = glm::translate(handle5, glm::vec3(4.6f, 1.42f, 0.84f));
         handle5 = glm::rotate(handle5, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         handle5 = glm::scale(handle5, glm::vec3(0.08f, 1.8f, 0.08f)); 
         envShader.setMat4("model", handle5);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
 
         // =========================================================
-        // 2E. ACCENTO DECORATIVO (Boiserie) - CORRETTA
+        // --- DECORATIVE WOOD PANELING (BOISERIE) ---
         // =========================================================
         envShader.setVec3("albedo", glm::vec3(0.78f, 0.72f, 0.62f));  
-        envShader.setFloat("metallic", 0.0f);
-        envShader.setFloat("roughness", 1.0f);
+        envShader.setFloat("metallic", 0.4f);
+        envShader.setFloat("roughness", 0.95f);
         
         glm::mat4 accentWall = glm::mat4(1.0f);
-        // FIX: X rimessa a 0.0f. La boiserie ora è perfettamente centrata su tutta la parete di fondo!
-        // Se vuoi alzarla o abbassarla sul muro, cambia la Y (attualmente 1.2f).
+        // Centered on the back wall
         accentWall = glm::translate(accentWall, glm::vec3(0.0f, 1.2f, -3.98f)); 
         accentWall = glm::rotate(accentWall, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        // SPESSORE FASCIA: Vuoi la striscia più spessa/alta? Aumenta la Y nello scale (ora 0.3f, prova 0.5f).
+        // Scale Y controls the thickness of the panel
         accentWall = glm::scale(accentWall, glm::vec3(1.0f, 0.3f, 1.0f));
         envShader.setMat4("model", accentWall);
         glBindVertexArray(floorVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
        // =========================================================
-        // 3. RENDER PARTICELLE E LOGICA CICLICA
-        // =========================================================
+       // 3. PARTICLE RENDERING & CYCLE LOGIC
+       // =========================================================
         
-        // --- IL TIMER DELLA MOKA ---
-        float cycleDuration = 10.0f; // Il ciclo dura 10 secondi in totale
+        // --- MOKA BREW TIMER ---
+        float cycleDuration = 10.0f; // Total cycle duration is 10 seconds
         float cycleTime = fmod(currentFrame, cycleDuration); 
         
         bool emitSteam = false;
         bool emitCoffee = false;
         
         if (cycleTime < 4.0f) {
-            emitSteam = true; // Primi 4 sec: Vapore
+            emitSteam = true; // First 4 seconds: Steam
         } 
         else if (cycleTime < 8.0f) {
-            emitCoffee = true; // Da 4s a 8s: Caffè
+            emitCoffee = true; // 4s to 8s: Coffee
         } 
 
-        // Passiamo i flag agli update
+        // Pass state flags to updates
         fireSystem.Update(deltaTime, true);
         steamSystem.Update(deltaTime, emitSteam);
         coffeeSystem.Update(deltaTime, emitCoffee);
@@ -624,8 +616,9 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    //audioManager.Shutdown();
     
+    audioManager.Shutdown();
+
     glfwTerminate();
     return 0;
 }

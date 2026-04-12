@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj"
+  "CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj.d"
   "CMakeFiles/MokaProject.dir/src/glad.c.obj"
   "CMakeFiles/MokaProject.dir/src/glad.c.obj.d"
   "CMakeFiles/MokaProject.dir/src/main.cpp.obj"

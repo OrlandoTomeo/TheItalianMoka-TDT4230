@@ -264,6 +264,30 @@ assimp/fast:
 	$(MAKE) $(MAKESILENT) -f _deps\assimp-build\code\CMakeFiles\assimp.dir\build.make _deps/assimp-build/code/CMakeFiles/assimp.dir/build
 .PHONY : assimp/fast
 
+src/audioManager.obj: src/audioManager.cpp.obj
+.PHONY : src/audioManager.obj
+
+# target to build an object file
+src/audioManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/audioManager.cpp.obj
+.PHONY : src/audioManager.cpp.obj
+
+src/audioManager.i: src/audioManager.cpp.i
+.PHONY : src/audioManager.i
+
+# target to preprocess a source file
+src/audioManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/audioManager.cpp.i
+.PHONY : src/audioManager.cpp.i
+
+src/audioManager.s: src/audioManager.cpp.s
+.PHONY : src/audioManager.s
+
+# target to generate assembly for a file
+src/audioManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MokaProject.dir\build.make CMakeFiles/MokaProject.dir/src/audioManager.cpp.s
+.PHONY : src/audioManager.cpp.s
+
 src/glad.obj: src/glad.c.obj
 .PHONY : src/glad.obj
 
@@ -356,6 +380,9 @@ help:
 	@echo ... glfw
 	@echo ... zlib
 	@echo ... zlibstatic
+	@echo ... src/audioManager.obj
+	@echo ... src/audioManager.i
+	@echo ... src/audioManager.s
 	@echo ... src/glad.obj
 	@echo ... src/glad.i
 	@echo ... src/glad.s

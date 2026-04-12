@@ -4,13 +4,13 @@ out vec4 FragColor;
 in vec3 WorldPos;
 in vec3 Normal;
 in vec2 TexCoords;
-in vec4 FragPosLightSpace;  // Position from light's perspective
+in vec4 FragPosLightSpace;
 
 uniform vec3 cameraPos;
 uniform vec3 firePos;
 uniform vec3 fireColor;
 uniform samplerCube skybox;
-uniform sampler2D shadowMap;  // Depth texture dalla pass 1
+uniform sampler2D shadowMap; // Depth texture from pass 1
 
 uniform vec3 albedo;
 uniform float metallic;
@@ -35,30 +35,18 @@ float perlin(vec2 p) {
 // === SHADOW CALCULATION (PCF - Percentage Closer Filtering) ===
 float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir)
 {
-    // Perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    
-    // Transform to [0,1] range
     projCoords = projCoords * 0.5 + 0.5;
     
-    // Clamp coordinates to valid shadow map range
-    if(projCoords.z > 1.0)
-        return 0.0;  // Outside light frustum = no shadow
+    if(projCoords.z > 1.0) return 0.0;
     
-    // Get closest depth value from shadow map
     float closestDepth = texture(shadowMap, projCoords.xy).r;
-    
-    // Get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
-    
-    // Calculate bias (prevents shadow acne)
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
     
-    // PCF (Percentage Closer Filtering) - soft shadows
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
     
-    // Sample 9 points around the current position
     for(int x = -1; x <= 1; ++x)
     {
         for(int y = -1; y <= 1; ++y)
@@ -70,8 +58,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir)
     shadow /= 9.0;
     
     // Smooth transition at edges
-    float edgeFade = smoothstep(0.0, 0.1, projCoords.x) * 
-                    smoothstep(1.0, 0.9, projCoords.x) *
+    float edgeFade = smoothstep(0.0, 0.1, projCoords.x) * smoothstep(1.0, 0.9, projCoords.x) *
                     smoothstep(0.0, 0.1, projCoords.y) *
                     smoothstep(1.0, 0.9, projCoords.y);
     shadow = mix(0.0, shadow, edgeFade);
@@ -84,10 +71,10 @@ void main() {
     vec3 V = normalize(cameraPos - WorldPos);
     vec3 finalAlbedo = albedo;
 
-    // --- 1. TEXTURE TILES ---
+    // --- 1. TILE TEXTURE ---
     if (!isCastIron && abs(N.y) < 0.5) {
         if (WorldPos.y > -1.55 && WorldPos.y < 0.2) {
-            float tileSize = 0.4;         
+            float tileSize = 0.4;
             float edgeThickness = 0.025; 
             
             vec2 grid = fract(vec2(WorldPos.x + WorldPos.z, WorldPos.y) / tileSize);
@@ -95,14 +82,14 @@ void main() {
             
             float tileNoise = perlin(vec2(WorldPos.x + WorldPos.z, WorldPos.y) * 5.0);
             vec3 baseTile = finalAlbedo * (0.95 + tileNoise * 0.05);
-            vec3 groutColor = vec3(0.12, 0.12, 0.12); 
+            vec3 groutColor = vec3(0.12, 0.12, 0.12);
             finalAlbedo = mix(groutColor, baseTile, mask);
         } 
         else if (WorldPos.y >= 0.2 && WorldPos.y < 0.23) {
             finalAlbedo = vec3(0.18, 0.15, 0.12);
         }
         else if (WorldPos.y <= -1.55) {
-            finalAlbedo = vec3(0.08, 0.08, 0.08); 
+            finalAlbedo = vec3(0.08, 0.08, 0.08);
         }
     }
 
@@ -116,18 +103,18 @@ void main() {
         N = normalize(N + noiseVec * 0.25); 
     }
 
-   // --- 3. PBR LIGHTING (FUOCO SOTTO LA MOKA) ---
+   // --- 3. PBR FIRE LIGHTING ---
     vec3 L = normalize(firePos - WorldPos);
     vec3 H = normalize(V + L);
     float distance = length(firePos - WorldPos);
     float attenuation = 1.0 / (1.0 + 0.07 * distance + 0.020 * (distance * distance));
     
-    // Ombra euristica per il fuoco (se non guarda il fuoco, è buio)
+    // Heuristic fire shadow (darken faces pointing away from fire)
     float fireShadow = smoothstep(0.0, 0.2, max(dot(N, L), 0.0));
-    if (WorldPos.y > firePos.y + 0.5 && N.y > 0.5) fireShadow *= 0.1; // Scurisce sopra
-    vec3 radiance = fireColor * attenuation * fireShadow; 
+    if (WorldPos.y > firePos.y + 0.5 && N.y > 0.5) fireShadow *= 0.1;
+    
+    vec3 radiance = fireColor * attenuation * fireShadow;
 
-    // Diffuse e Specular del fuoco
     float NdotL = max(dot(N, L), 0.0);
     float NdotH = max(dot(N, H), 0.0);
     vec3 diffuse = finalAlbedo * (1.0 - metallic) * NdotL;
@@ -137,33 +124,33 @@ void main() {
     float specularIntensity = mix(0.5, 3.5, metallic);
     vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic) * specularIntensity;
 
-    // --- 4. OMBRE DALLA LUCE PRINCIPALE (SHADOW MAPPING) ---
-    // Sincronizzato con la nuova posizione in main.cpp: Sinistra(-8), Alto(8), Avanti(4)
+    // --- 4. DIRECTIONAL SHADOW MAPPING ---
+    // Matched with lightPos in main.cpp
     vec3 lightTopDir = normalize(vec3(-8.0, 8.0, 4.0) - WorldPos);
-    
     float shadow = ShadowCalculation(FragPosLightSpace, N, lightTopDir);
     float shadowFactor = 1.0 - (shadow * 0.85);
 
-    // --- 5. LUCE AMBIENTALE (RIACCESA!) ---
+    // --- 5. AMBIENT LIGHTING ---
     vec3 R = reflect(-V, N);
-    // Riattiviamo la skybox per far brillare un po' piastrelle e tavole
-    vec3 envReflect = texture(skybox, R).rgb * 0.15; 
+    
+    // Skybox reflections for materials
+    vec3 envReflect = texture(skybox, R).rgb * 0.15;
     vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * (1.0 - roughness);
 
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
-    vec3 topLightColor = vec3(0.55, 0.60, 0.65); // Luce fredda diurna
+    vec3 topLightColor = vec3(0.55, 0.60, 0.65); 
     
-    // La luce dall'alto viene bloccata dall'ombra!
-    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.7 * shadowFactor; 
+    // Block top light using shadow map
+    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.7 * shadowFactor;
     
-    // Alziamo la luce diffusa di base (da 0.01 a 0.15)
+    // Base ambient diffuse
     vec3 ambientDiff = (finalAlbedo * 0.15) + topLight;
 
-    // --- COMPOSIZIONE FINALE ---
+    // --- 6. FINAL COMPOSITION ---
     vec3 finalColor = ambientDiff + ambientSpec + (diffuse + specular) * radiance;
     
-    // Esposizione riportata quasi a 1.0 per far risaltare tutto
-    finalColor *= 0.9; 
+    // Exposure tone mapping
+    finalColor *= 0.9;
     finalColor = finalColor / (finalColor + vec3(1.0));
     finalColor = pow(finalColor, vec3(1.0/2.2));
 

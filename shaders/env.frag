@@ -137,8 +137,9 @@ void main() {
     float specularIntensity = mix(0.5, 3.5, metallic);
     vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic) * specularIntensity;
 
-    // --- 4. OMBRE DAL SOFFITTO (SHADOW MAPPING) ---
-    vec3 lightTopDir = normalize(vec3(0.0, 15.0, 0.0) - WorldPos);
+    // --- 4. OMBRE DALLA LUCE PRINCIPALE (SHADOW MAPPING) ---
+    // Sincronizzato con la nuova posizione in main.cpp: Sinistra(-8), Alto(8), Avanti(4)
+    vec3 lightTopDir = normalize(vec3(-8.0, 8.0, 4.0) - WorldPos);
     
     float shadow = ShadowCalculation(FragPosLightSpace, N, lightTopDir);
     float shadowFactor = 1.0 - (shadow * 0.85);

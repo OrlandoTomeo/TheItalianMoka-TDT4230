@@ -168,12 +168,13 @@ int main() {
         // =========================================================
         // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DALLA LUCE)
         // =========================================================
-        glm::vec3 lightPos = glm::vec3(0.0f, 15.0f, 0.0f); 
+        glm::vec3 lightPos = glm::vec3(-8.0f, 8.0f, 4.0f); 
         
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 25.0f);
+        // Allarghiamo la telecamera da 10 a 15 per catturare le ombre lunghe
+        glm::mat4 lightProjection = glm::ortho(-15.0f, 15.0f, -15.0f, 15.0f, 1.0f, 30.0f);
         
-        // FIX MATEMATICO: Se guarda in basso, l'Up Vector deve essere (0,0,-1)
-        glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f));
+        // Siccome la luce non guarda più "a piombo", rimettiamo l'Up Vector standard (0,1,0)
+        glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);

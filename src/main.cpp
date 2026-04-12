@@ -166,22 +166,23 @@ int main() {
             glfwSetWindowShouldClose(window, true);
 
         // =========================================================
-        // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DAL SOFFITTO)
+        // PASS 1: RENDER DELLA SHADOW MAP (LA FOTO DALLA LUCE)
         // =========================================================
-        glm::vec3 lightPos = glm::vec3(0.0f, 10.0f, 1.0f); // Luce alta, leggermente avanti
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
+        // SPOSTIAMO LA LUCE: X a 6.0 (a destra), Y a 12.0 (più in alto), Z a 4.0 (in avanti)
+        glm::vec3 lightPos = glm::vec3(6.0f, 12.0f, 4.0f); 
+        // Allarghiamo la telecamera ortogonale per far entrare tutta la cucina
+        glm::mat4 lightProjection = glm::ortho(-12.0f, 12.0f, -12.0f, 12.0f, 1.0f, 25.0f);
         glm::mat4 lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-        // Diciamo a OpenGL di disegnare nella memoria nascosta (2048x2048)
         glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-        glClear(GL_DEPTH_BUFFER_BIT); // Puliamo solo la profondità
+        glClear(GL_DEPTH_BUFFER_BIT); 
         
         shadowShader.use();
         shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-        // Disegniamo la moka "ombra"
+        // --- DISEGNIAMO LA MOKA NELL'OMBRA ---
         glm::mat4 mokaShadowModel = glm::mat4(1.0f);
         mokaShadowModel = glm::translate(mokaShadowModel, glm::vec3(0.0f, -0.8f, 0.0f));
         mokaShadowModel = glm::rotate(mokaShadowModel, glm::radians(19.4863f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -190,26 +191,34 @@ int main() {
         shadowShader.setMat4("model", mokaShadowModel);
         mokaBialetti.Draw(shadowShader);
 
-        // Disegniamo la mensola di sinistra per farle fare ombra
-        glBindVertexArray(cylVAO);
-        glm::mat4 shelfShadow = glm::mat4(1.0f);
-        shelfShadow = glm::translate(shelfShadow, glm::vec3(-0.6f, 1.6f, -3.8f)); 
-        shelfShadow = glm::scale(shelfShadow, glm::vec3(2.5f, 1.12f, 0.6f)); 
-        shadowShader.setMat4("model", shelfShadow);
-        glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        // --- DISEGNIAMO MENSOLE E TAZZINE NELL'OMBRA ---
+        glBindVertexArray(cylVAO); // Tutto il resto usa i cilindri
         
-        // Sganciamo la memoria nascosta. La "foto" è pronta!
+        // Mensole
+        glm::mat4 sh1 = glm::mat4(1.0f); sh1 = glm::translate(sh1, glm::vec3(-0.6f, 1.6f, -3.8f)); sh1 = glm::scale(sh1, glm::vec3(2.5f, 1.12f, 0.6f)); 
+        shadowShader.setMat4("model", sh1); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        
+        glm::mat4 sh2 = glm::mat4(1.0f); sh2 = glm::translate(sh2, glm::vec3(-0.6f, 0.9f, -3.8f)); sh2 = glm::scale(sh2, glm::vec3(2.5f, 1.12f, 0.6f)); 
+        shadowShader.setMat4("model", sh2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
+        glm::mat4 shR = glm::mat4(1.0f); shR = glm::translate(shR, glm::vec3(5.9f, 1.2f, 1.0f)); shR = glm::scale(shR, glm::vec3(1.0f, 1.12f, 2.5f)); 
+        shadowShader.setMat4("model", shR); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
+        // Tazzine (Ne bastano le forme base per fare un'ottima ombra)
+        glm::mat4 c1 = glm::mat4(1.0f); c1 = glm::translate(c1, glm::vec3(-0.2f, 1.05f, -3.75f)); c1 = glm::scale(c1, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c1); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c2 = glm::mat4(1.0f); c2 = glm::translate(c2, glm::vec3(0.4f, 1.05f, -3.75f)); c2 = glm::scale(c2, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c2); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c3 = glm::mat4(1.0f); c3 = glm::translate(c3, glm::vec3(-1.5f, 1.75f, -3.75f)); c3 = glm::scale(c3, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c3); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c4 = glm::mat4(1.0f); c4 = glm::translate(c4, glm::vec3(3.8f, 1.35f, 0.4f)); c4 = glm::scale(c4, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c4); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+        glm::mat4 c5 = glm::mat4(1.0f); c5 = glm::translate(c5, glm::vec3(3.8f, 1.35f, 1.0f)); c5 = glm::scale(c5, glm::vec3(0.20f, 6.5f, 0.20f)); shadowShader.setMat4("model", c5); glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
         // =========================================================
-        // PASS 2: RENDER NORMALE DELLA SCENA (Tuo codice originale!)
+        // PASS 2: RENDER NORMALE DELLA SCENA
         // =========================================================
-        // IMPORTANTISSIMO: Rimettiamo la grandezza dello schermo normale!
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT); 
-
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         // Da qui in poi è esattamente il tuo codice di prima
-        glClearColor(0.01f, 0.01f, 0.02f, 1.0f);
+        glClearColor(0.40f, 0.43f, 0.47f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float camY = 2.0f + sin(currentFrame * 0.3f) * 0.5f; 
@@ -469,7 +478,7 @@ int main() {
 
         // MENSOLA DESTRA
         glm::mat4 shelfRight = glm::mat4(1.0f);
-        shelfRight = glm::translate(shelfRight, glm::vec3(3.6f, 1.2f, 1.0f)); 
+        shelfRight = glm::translate(shelfRight, glm::vec3(4.2f, 1.2f, 1.0f)); 
         shelfRight = glm::scale(shelfRight, glm::vec3(1.0f, 1.12f, 2.5f)); 
         envShader.setMat4("model", shelfRight);
         glDrawArrays(GL_TRIANGLES, 0, cylVertexCount);

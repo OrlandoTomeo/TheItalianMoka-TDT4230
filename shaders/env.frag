@@ -138,29 +138,30 @@ void main() {
     vec3 specular = radiance * spec * mix(vec3(0.04), finalAlbedo, metallic) * specularIntensity;
 
     // --- 4. OMBRE DAL SOFFITTO (SHADOW MAPPING) ---
-    // Calcoliamo la direzione della luce dal soffitto (che abbiamo messo in main.cpp)
-    vec3 lightTopDir = normalize(vec3(0.0, 10.0, 1.0) - WorldPos);
+    vec3 lightTopDir = normalize(vec3(6.0, 12.0, 4.0) - WorldPos);
     float shadow = ShadowCalculation(FragPosLightSpace, N, lightTopDir);
-    float shadowFactor = 1.0 - (shadow * 0.9); // Ombra al 90%
+    float shadowFactor = 1.0 - (shadow * 0.85); // Ombra netta ma non "nera assoluta"
 
-    // --- 5. LUCE AMBIENTALE ---
+    // --- 5. LUCE AMBIENTALE (RIACCESA!) ---
     vec3 R = reflect(-V, N);
-    vec3 envReflect = texture(skybox, R).rgb * 0.02; // Skybox quasi spenta
+    // Riattiviamo la skybox per far brillare un po' piastrelle e tavole
+    vec3 envReflect = texture(skybox, R).rgb * 0.15; 
     vec3 ambientSpec = envReflect * mix(vec3(0.04), finalAlbedo, metallic) * (1.0 - roughness);
 
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
-    vec3 topLightColor = vec3(0.35, 0.40, 0.45);
+    vec3 topLightColor = vec3(0.55, 0.60, 0.65); // Luce fredda diurna
     
-    // LA MAGIA: L'ombra spegne SOLO la luce ambientale dall'alto!
-    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.6 * shadowFactor; 
+    // La luce dall'alto viene bloccata dall'ombra!
+    vec3 topLight = finalAlbedo * topLightColor * upwardNormal * 0.7 * shadowFactor; 
     
-    vec3 ambientDiff = (finalAlbedo * 0.01) + topLight;
+    // Alziamo la luce diffusa di base (da 0.01 a 0.15)
+    vec3 ambientDiff = (finalAlbedo * 0.15) + topLight;
 
     // --- COMPOSIZIONE FINALE ---
     vec3 finalColor = ambientDiff + ambientSpec + (diffuse + specular) * radiance;
     
-    // Esposizione per contrasto
-    finalColor *= 0.6; 
+    // Esposizione riportata quasi a 1.0 per far risaltare tutto
+    finalColor *= 0.9; 
     finalColor = finalColor / (finalColor + vec3(1.0));
     finalColor = pow(finalColor, vec3(1.0/2.2));
 

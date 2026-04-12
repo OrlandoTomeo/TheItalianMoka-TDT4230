@@ -72,25 +72,25 @@ void main() {
     vec3 F0 = mix(vec3(0.04), currentAlbedo, currentMetallic);
 
     // ----------------------------------------------------
-    // 1. LUCE AMBIENTALE (Riflessi Skybox + ZENITALE)
+    // 1. LUCE AMBIENTALE SULLA MOKA (Riflessi + Luce dall'alto)
     // ----------------------------------------------------
     vec3 fresnelAmbient = fresnelSchlick(max(dot(N, V), 0.0), F0);
     
-    // Attenzione: usiamo currentRoughness per i riflessi
     vec3 envColor = textureLod(skybox, R, currentRoughness * 7.0).rgb;
-    vec3 skyboxReflect = envColor * fresnelAmbient * 0.6; 
+    // Riportiamo i riflessi a 0.4 (prima li avevamo "uccisi" a 0.1)
+    vec3 skyboxReflect = envColor * fresnelAmbient * 0.4; 
 
     float upwardNormal = max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0);
-    vec3 topLightColor = vec3(0.8, 0.85, 0.9); 
+    vec3 topLightColor = vec3(0.6, 0.65, 0.7); 
     
     vec3 kS_zenith = fresnelSchlick(max(dot(N, vec3(0.0, 1.0, 0.0)), 0.0), F0);
     vec3 kD_zenith = 1.0 - kS_zenith;
-    kD_zenith *= 1.0 - currentMetallic; // Usiamo currentMetallic
+    kD_zenith *= 1.0 - currentMetallic; 
 
-    vec3 diffuseZenith = (kD_zenith * currentAlbedo) * topLightColor * upwardNormal * 0.4;
+    // Aumentiamo la luce diffusa dall'alto (da 0.02 a 0.3)
+    vec3 diffuseZenith = (kD_zenith * currentAlbedo) * topLightColor * upwardNormal * 0.3;
     
     vec3 ambient = skyboxReflect + diffuseZenith;
-
     // ----------------------------------------------------
     // 2. LUCE DINAMICA (Fuoco Sotto la Moka)
     // ----------------------------------------------------

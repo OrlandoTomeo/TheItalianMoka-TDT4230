@@ -66,6 +66,7 @@ FetchContent_MakeAvailable(assimp)
 add_executable(MokaProject
     src/main.cpp
     #src/shader.cpp
+    #src/audioManager.cpp
     src/glad.c
     src/stb_image.cpp
     src/Shader.h        
@@ -78,13 +79,35 @@ add_executable(MokaProject
 target_include_directories(MokaProject PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/external/include
+    #${CMAKE_CURRENT_SOURCE_DIR}/external/include/utils
 )
+
+target_link_directories(MokaProject PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/lib)
+
+#set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".a" ${CMAKE_FIND_LIBRARY_SUFFIXES})
+#
+#if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/lib/libOpenAL32.a")
+#    set(OPENAL_LIB "${CMAKE_CURRENT_SOURCE_DIR}/external/lib/libOpenAL32.a")
+#elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/lib/OpenAL32.lib")
+#    set(OPENAL_LIB "${CMAKE_CURRENT_SOURCE_DIR}/external/lib/OpenAL32.lib")
+#else()
+#    message(FATAL_ERROR "Nessuna OpenAL trovata in external/lib!")
+#endif()
+#
+#message(STATUS ">>> OpenAL usata: ${OPENAL_LIB}")
+#
+#if(NOT OPENAL_LIB)
+#    message(FATAL_ERROR "OpenAL non trovata in external/lib! Controlla che ci sia OpenAL32.lib o libOpenAL32.a")
+#endif()
+#
+#message(STATUS "OpenAL trovata: ${OPENAL_LIB}")
 
 target_link_libraries(MokaProject PRIVATE
     ${OPENGL_LIBRARIES}
     glfw
     glm::glm
     assimp
+    #${CMAKE_CURRENT_SOURCE_DIR}/external/lib/libOpenAL32.dll.a
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
